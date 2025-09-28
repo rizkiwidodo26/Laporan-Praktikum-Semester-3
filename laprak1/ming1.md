@@ -1,5 +1,5 @@
 # <h1 align="center">Laporan Praktikum Modul 1 <br> Pengenalan C++ </h1>
-<p align="center">Rizki Widodo - 103112400136 </p>
+<p align="center">RIZKI WIDODO - 103112400136 </p>
 
 ## Dasar Teori
 
@@ -15,7 +15,8 @@ aku mengerjakan perulangan
 
 ### Soal 1
 
-copy paste soal nomor 1 disini
+Buatlah program yang menerima input-an dua buah bilangan betipe float, kemudian memberikan output-an hasil penjumlahan, pengurangan, perkalian, dan pembagian dari dua bilangan tersebut.
+
 
 ```go
 #include <iostream>
@@ -52,7 +53,8 @@ Penjelasan ttg kode kalian disini
 
 ### Soal 2
 
-soal nomor 2
+Buatlah sebuah program yang menerima masukan angka dan mengeluarkan output nilai angka tersebut dalam bentuk tulisan. Angka yang akan di- input-kan user adalah bilangan bulat positif mulai dari 0 s.d 100
+
 
 ```go
 #include <iostream>
@@ -115,6 +117,7 @@ penjelasan kode
 Kalau adalanjutan di lanjut disini aja
 
 soal nomor 3
+Buatlah program yang dapat memberikan input dan output sbb.
 
 ```go
 #include <iostream>
@@ -122,23 +125,41 @@ using namespace std;
 
 int main() {
     int n;
+    cout << "input: ";
     cin >> n;
+    cout << "output: " << endl;
     
-    for(int i = n; i > 0; i--) {
-        for(int j = i; j > 0; j--)
+    
+    for (int i = n; i >= 1; i--) {
+
+        for (int j = 1; j <= n - i; j++) {
+            cout << "  ";
+        }        
+        
+        for (int j = i; j >= 1; j--) {
             cout << j << " ";
+        }
+        
         cout << "* ";
-        for(int j = 1; j <= i; j++)
+
+        for (int j = 1; j <= i; j++) {
             cout << j << " ";
+        }
+        
         cout << endl;
     }
+    
+    for (int i = 0; i < n; i++) {
+        cout << "  ";
+    }
+    cout << "*" << endl;
     
     return 0;
 }
 ```
 
 > Output
-> ![Screenshot bagian x](output/screenshot_soal2B.png)
+> ![Screenshot bagian x](output/screenshot_soal.png)
 
 penjelasan bedanya sesuai soal
 
