@@ -109,6 +109,7 @@ int main() {
     
     return 0;
 }
+```
 > Output
 > ![Screenshot bagian x](output/screenshot_soal2A.png)
 
