@@ -256,9 +256,9 @@ int main() {
 
 > Output
 > ![Screenshot bagian x](output/no1.png)
-> %% Untuk mencantumkan screenshot, tidak boleh ada spasi di urlnya `()`, penamaan file bebas asal gak sara dan mudah dipahami aja,, dan jangan lupa hapus komen ini yah%%
 
-Penjelasan ttg kode kalian disini
+Penjelasan Kode
+Program di atas meminta pengguna memasukkan dua bilangan, lalu menghitung penjumlahan, pengurangan, perkalian, dan pembagiannya. Hasil dari setiap operasi ditampilkan ke layar menggunakan cout, dan return 0; menandakan program selesai dengan normal.
 
 ### Soal 2
 
@@ -323,7 +323,7 @@ int main() {
 > ![Screenshot bagian x](output/no2.png)
 
 penjelasan kode
-
+Program di atas digunakan untuk mengubah angka menjadi tulisan dalam bahasa Indonesia untuk rentang 0–100. Pertama, pengguna diminta memasukkan angka, lalu program mengecek apakah angka valid. Jika kurang dari 10, hasil diambil dari array satuan, jika 10–19 diambil dari array belasan, jika 20–99 dibentuk dari kata “puluh” ditambah satuan, dan khusus angka 100 ditampilkan sebagai “seratus”. Hasil akhirnya ditampilkan ke layar dalam bentuk angka dan teks.
 Kalau adalanjutan di lanjut disini aja
 
 soal nomor 3
@@ -371,12 +371,13 @@ int main() {
 > Output
 > ![Screenshot bagian x](output/no3.png)
 
-penjelasan bedanya sesuai soal
+penjelasan kode
+Program di atas meminta input sebuah angka n, lalu menampilkan pola berbentuk segitiga menurun dengan angka dari besar ke kecil di sebelah kiri, tanda * di tengah, dan angka dari kecil ke besar di sebelah kanan. Setiap baris bergeser ke kanan dengan spasi sesuai urutan, dan di bagian akhir program menambahkan satu * di bawah tengah pola.
 
 ## Referensi
 1. https://www.w3schools.com/cpp/cpp_for_loop.asp
 2. https://www.w3schools.com/cpp/cpp_conditions.asp
-3. https://www.w3schools.com/cpp/cpp_conditions elseif.asp
+3. https://www.w3schools.com/cpp/cpp_conditions_elseif.asp
 4. https://www.w3schools.com/cpp/cpp_conditions_else.asp
 5. https://www.w3schools.com/cpp/cpp_variables_multiple.asp
 6. https://www.w3schools.com/cpp/cpp_arrays.asp
