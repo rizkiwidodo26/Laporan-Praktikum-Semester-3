@@ -374,5 +374,9 @@ int main() {
 penjelasan bedanya sesuai soal
 
 ## Referensi
-
-1. https://en.wikipedia.org/wiki/Data_structure (diakses blablabla)
+1. https://www.w3schools.com/cpp/cpp_for_loop.asp
+2. https://www.w3schools.com/cpp/cpp_conditions.asp
+3. https://www.w3schools.com/cpp/cpp_conditions elseif.asp
+4. https://www.w3schools.com/cpp/cpp_conditions_else.asp
+5. https://www.w3schools.com/cpp/cpp_variables_multiple.asp
+6. https://www.w3schools.com/cpp/cpp_arrays.asp
