@@ -2,8 +2,13 @@
 <p align="center">RIZKI WIDODO - 103112400136 </p>
 
 ## Dasar Teori
-
-yang panjang dikit
+Konsep Dasar Penting dalam C++
+C++ memiliki beberapa fundamental utama yang esensial untuk dipahami, meliputi struct, aritmatika, kondisi, perulangan, dan fungsi.
+Struct berfungsi sebagai wadah untuk mengelompokkan berbagai variabel dengan tipe data berbeda menjadi satu kesatuan, sehingga memudahkan organisasi dan pengelolaan data.
+Aritmatika mencakup penggunaan operator matematika seperti penambahan (+), pengurangan (-), perkalian (*), pembagian (/), dan modulus (%) untuk melakukan berbagai komputasi numerik.
+Kondisi (percabangan) menggunakan statement if, else if, else, dan switch untuk mengontrol alur program berdasarkan evaluasi kondisi tertentu, memungkinkan eksekusi kode yang selektif.
+Perulangan dengan for, while, dan do while memungkinkan eksekusi blok kode secara berulang tanpa perlu menulis kode yang sama secara manual, meningkatkan efisiensi penulisan program.
+Fungsi merupakan blok kode yang dirancang untuk tugas spesifik dan dapat dipanggil berulang kali, memberikan manfaat strukturisasi kode yang lebih rapi, kemudahan pembacaan, serta reusability.
 
 
 ## Guided
