@@ -2,7 +2,7 @@
 <p align="center">Rizki Widodo - 103112400136</p>
 
 ## Dasar Teori
-Berdasarkan modul praktikum, tipe data dan variabel merupakan konsep fundamental dalam pemrograman Go. Tipe data mendefinisikan jenis nilai yang dapat disimpan, seperti int untuk bilangan bulat, float64 untuk bilangan desimal, dan string untuk teks. Variabel berfungsi sebagai wadah penyimpanan yang dideklarasikan dengan keyword var atau short declaration :=. Program menggunakan fmt.Scan() untuk input data dan fmt.Printf() untuk output, sementara operasi aritmatika seperti penjumlahan dan perkalian digunakan untuk perhitungan matematis termasuk luas lingkaran dengan math.Pi. Manipulasi string memungkinkan penggabungan teks, dan teknik swap variabel dengan bantuan variabel sementara digunakan untuk pertukaran nilai. Pemahaman ini menjadi pondasi essential sebelum melanjutkan ke struktur data yang lebih kompleks.
+Modul ini membahas konsep fundamental dalam pemrograman C++ meliputi array, pointer, fungsi, dan prosedur. Array berfungsi sebagai kumpulan data dengan tipe sama yang diakses melalui indeks, baik satu dimensi maupun multidimensi. Pointer merupakan variabel yang menyimpan alamat memori variabel lain, memungkinkan manipulasi data secara langsung di memori. Fungsi dan prosedur digunakan untuk memecah program menjadi modul-modul kecil, dimana fungsi mengembalikan nilai sedangkan prosedur (fungsi void) tidak. Terdapat tiga cara passing parameter: call by value (menyalin nilai), call by pointer (menggunakan alamat memori dengan operator), dan call by reference (menggunakan referensi dengan operator &) yang memungkinkan modifikasi variabel asli. Konsep-konsep ini menjadi pondasi penting untuk pengelolaan memori dan organisasi kode dalam pemrograman terstruktur.
 
 ## Unguided
 
@@ -62,44 +62,54 @@ int main() {
 ```
 
 > Output
-> ![Screenshot bagian x](output/no1.png (2))
+> ![Screenshot bagian x](output/no1.png)
 > %% Untuk mencantumkan screenshot, tidak boleh ada spasi di urlnya `()`, penamaan file bebas asal gak sara dan mudah dipahami aja,, dan jangan lupa hapus komen ini yah%%
 
 Penjelasan ttg kode kalian disini
+Program ini membuat matriks 3x3 dengan nilai 1-9, kemudian membuat matriks transpose dengan menukar baris dan kolom menggunakan loop bersarang. Kunci transposenya ada di line transpose[j][i] = matriks[i][j] dimana indeks i dan j ditukar, sehingga elemen di baris i kolom j pindah ke baris j kolom i. Hasilnya matriks awal yang barisnya 1-2-3, 4-5-6, 7-8-9 berubah menjadi kolomnya 1-4-7, 2-5-8, 3-6-9.
+
 
 ### Soal 2
+2. Buatlah program yang menunjukkan penggunaan call by reference. Buat sebuah prosedur bernama kuadratkan yang menerima satu parameter integer secara referensi (&). Prosedur ini akan mengubah nilai asli variabel yang dilewatkan dengan nilai kuadratnya. Tampilkan nilai variabel di main() sebelum dan sesudah memanggil prosedur untuk membuktikan perubahannya. 
 
+Contoh Output:
+
+Nilai awal: 5
+Nilai setelah dikuadratkan: 25
 soal nomor 2A
 
 ```go
-package main
+#include <iostream>
+using namespace std;
 
-func main() {
-	fmt.Println("kode untuk soal nomor 2A")
+// Prosedur dengan parameter referensi
+void kuadratkan(int &angka) {
+    angka = angka * angka; // Mengubah nilai asli variabel
+}
+
+
+int main() {
+    int nilai = 5;
+    
+    // Menampilkan nilai sebelum diproses
+    cout << "Nilai awal: " << nilai << endl;
+    
+    // Memanggil prosedur dengan passing by reference
+    kuadratkan(nilai);
+    
+    // Menampilkan nilai setelah diproses
+    cout << "Nilai setelah dikuadratkan: " << nilai << endl;
+    
+    return 0;
 }
 ```
 
 > Output
-> ![Screenshot bagian x](output/screenshot_soal2A.png)
+> ![Screenshot bagian x](output/no2.png)
 
 penjelasan kode
+Program ini menunjukkan perbedaan parameter biasa dan reference. Dengan menambahkan & sebelum parameter angka di fungsi kuadratkan, yang dikirim ke fungsi adalah alamat memori variabel nilai bukan nilainya. Jadi ketika di dalam fungsi dilakukan angka = angka * angka, yang berubah adalah variabel asli nilai di main dari 5 langsung menjadi 25, bukan hanya salinannya saja.
 
-Kalau adalanjutan di lanjut disini aja
-
-soal nomor 2B
-
-```go
-package main
-
-func main() {
-	fmt.Println("kode untuk soal nomor 2B")
-}
-```
-
-> Output
-> ![Screenshot bagian x](output/screenshot_soal2B.png)
-
-penjelasan bedanya sesuai soal
 
 ## Referensi
 
