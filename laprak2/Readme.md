@@ -4,6 +4,173 @@
 ## Dasar Teori
 Modul ini membahas konsep fundamental dalam pemrograman C++ meliputi array, pointer, fungsi, dan prosedur. Array berfungsi sebagai kumpulan data dengan tipe sama yang diakses melalui indeks, baik satu dimensi maupun multidimensi. Pointer merupakan variabel yang menyimpan alamat memori variabel lain, memungkinkan manipulasi data secara langsung di memori. Fungsi dan prosedur digunakan untuk memecah program menjadi modul-modul kecil, dimana fungsi mengembalikan nilai sedangkan prosedur (fungsi void) tidak. Terdapat tiga cara passing parameter: call by value (menyalin nilai), call by pointer (menggunakan alamat memori dengan operator), dan call by reference (menggunakan referensi dengan operator &) yang memungkinkan modifikasi variabel asli. Konsep-konsep ini menjadi pondasi penting untuk pengelolaan memori dan organisasi kode dalam pemrograman terstruktur.
 
+## Guide
+
+## 01_Array
+```go
+#include <iostream>
+using namespace std;
+
+int main() {
+
+    int nilai[5] = {1, 2, 3, 4, 5};
+
+    for ( int i = 0;  i < 5; i++)
+    {
+       
+        cout << "elemen ke-" << i << "=" << nilai[i] << endl;
+    }
+    return 0;
+}
+```
+
+## 02_Array
+```go
+#include <iostream>
+using namespace std;
+
+int main() {
+    int matrik[3][3] = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    };
+
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            cout << matrik[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+```
+
+## 03_pointer
+```go
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int umur = 25;
+    int *p_umur;
+
+    p_umur = &umur;
+
+    cout << "Nilai 'umur' : " << umur << endl;
+    cout << "Alamat memori 'umur' : " << &umur << endl;
+    cout << "Nilai 'p_umur' (alamat) : " << p_umur << endl;
+    cout << "Nilai yang diakses 'p_umur' : " << *p_umur << endl;
+    cout << "Alamat memori dari pointer 'p_umur' itu sendiri : " << &p_umur << endl;
+
+    return 0;
+}
+```
+
+## 04_array_pointer
+```go
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int data[5] = {10, 20, 30, 40, 50};
+    int *p_data = data;
+
+    cout << "Mengakses elemen array cara normal:" << endl;
+
+    for (int i = 0; i < 5; ++i)
+    {
+        cout << "Nilai elemen ke-" << i << " : " << data[i] << endl;
+    }
+
+    cout << "Mengakses elemen array menggunakan pointer:" << endl;
+
+    for (int i = 0; i < 5; ++i)
+    {
+        cout << "Nilai elemen ke-" << i << " : " << *(p_data + i) << endl;
+    }
+
+    return 0;
+}
+```
+
+## 05_string_pointer
+```go
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    char pesan_array[] = "Nasi Padang";
+    char *pesan_pointer = "Ayam Bakar 23";
+
+    cout << "String Array: " << pesan_array << endl;
+    cout << "String Pointer: " << pesan_pointer << endl;
+
+    // Mengubah karakter dalam array diperbolehkan
+    pesan_array[0] = 'h';
+    cout << "String Array setelah diubah: " << pesan_array << endl;
+
+    // Pointer dapat diubah untuk menunjuk ke string lain
+    pesan_pointer = "Sariman";
+    cout << "String Pointer setelah menunjuk ke string lain: " << pesan_pointer << endl;
+
+    return 0;
+}
+```
+
+## 06_
+```go
+
+```
+
+## 07_call_by_pointer
+```go
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int a = 10, b = 20;
+    cout << "Sebelum ditukar: a = " << a << ", b = " << b << endl;
+    tukar(&a, &b);
+    cout << "Setelah ditukar: a = " << a << ", b = " << b << endl;
+    return 0;
+}
+
+void tukar(int *px, int *py)
+{
+    int temp = *px;
+    *px = *py;
+    *py = temp;
+}
+```
+
+## 08_call_by_reference
+```go
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int a = 10, b = 20;
+    cout << "Sebelum ditukar: a = " << a << ", b = " << b << endl;
+    tukar(a, b);
+    cout << "Setelah ditukar: a = " << a << ", b = " << b << endl;
+    return 0;
+}
+
+void tukar(int &x, int &y)
+{
+    int temp = x;
+    x = y;
+    y = temp;
+}
+```
+
 ## Unguided
 
 ### soal 1
@@ -12,13 +179,19 @@ Modul ini membahas konsep fundamental dalam pemrograman C++ meliputi array, poin
 Contoh Output:
 
 Matriks Awal:
+
 1 2 3
+
 4 5 6
+
 7 8 9
 
 Matriks Hasil Transpose:
+
 1 4 7
+
 2 5 8
+
 3 6 9
 
 ### Soal 1
@@ -63,7 +236,6 @@ int main() {
 
 > Output
 > ![Screenshot bagian x](output/no1.png)
-> %% Untuk mencantumkan screenshot, tidak boleh ada spasi di urlnya `()`, penamaan file bebas asal gak sara dan mudah dipahami aja,, dan jangan lupa hapus komen ini yah%%
 
 Penjelasan ttg kode kalian disini
 Program ini membuat matriks 3x3 dengan nilai 1-9, kemudian membuat matriks transpose dengan menukar baris dan kolom menggunakan loop bersarang. Kunci transposenya ada di line transpose[j][i] = matriks[i][j] dimana indeks i dan j ditukar, sehingga elemen di baris i kolom j pindah ke baris j kolom i. Hasilnya matriks awal yang barisnya 1-2-3, 4-5-6, 7-8-9 berubah menjadi kolomnya 1-4-7, 2-5-8, 3-6-9.
@@ -113,4 +285,8 @@ Program ini menunjukkan perbedaan parameter biasa dan reference. Dengan menambah
 
 ## Referensi
 
-1. https://en.wikipedia.org/wiki/Data_structure (diakses blablabla)
+1. [https://www.w3schools.com/cpp/cpp_references.asp](https://www.w3schools.com/cpp/cpp_references.asp)
+2. [https://www.w3schools.com/cpp/cpp_function_reference.asp](https://www.w3schools.com/cpp/cpp_function_reference.asp)
+3. [https://www.w3schools.com/cpp/cpp_function_structures.asp](https://www.w3schools.com/cpp/cpp_function_structures.asp)
+4. [https://www.w3schools.com/cpp/exercise.asp?x=xrcise_function_reference1](https://www.w3schools.com/cpp/exercise.asp?x=xrcise_function_reference1)
+5. [https://www.w3schools.com/cpp/cpp_function_param.asp](https://www.w3schools.com/cpp/cpp_function_param.asp)
