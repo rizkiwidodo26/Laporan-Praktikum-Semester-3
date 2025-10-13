@@ -81,7 +81,7 @@ int main() {
 
 ```
 > Output
-> ![Screenshot bagian x](output/no1.png)
+> ![Screenshot bagian x]()
 
 ### Soal 2
 
