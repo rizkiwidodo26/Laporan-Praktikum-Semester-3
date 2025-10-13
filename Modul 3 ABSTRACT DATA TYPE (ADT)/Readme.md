@@ -81,7 +81,7 @@ int main() {
 
 ```
 > Output
-> ![Screenshot bagian x](https://github.com/rizkiwidodo26/Laporan-Praktikum-Semester-3/blob/master/Modul%203%20ABSTRACT%20DATA%20TYPE%20(ADT)/Output/no1.png)
+> ![Screenshot bagian x](Output/no1.png)
 
 
 Modul 3 ABSTRACT DATA TYPE (ADT)/Output/Soalno2.jpg
