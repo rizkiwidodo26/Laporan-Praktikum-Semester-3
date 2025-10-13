@@ -187,6 +187,9 @@ int main() {
 
 ### Soal 1
 
+buatlah single linked list untuk Antrian yang menyimpan data pembeli( nama dan pesanan). program memiliki beberapa menu seperti tambah antrian,  layani antrian(hapus), dan tampilkan antrian. \*antrian pertama harus yang pertama dilayani
+
+
 ```go
 #include <iostream>
 #include <string>
@@ -220,8 +223,15 @@ int main() {
 }
 
 ```
+> Output
+> ![Screenshot bagian x](output/no1.png)
+
 
 ### Soal 2
+
+2. buatlah program kode untuk membalik (reverse) singly linked list (1-2-3 menjadi 3-2-1)
+
+   
 ```go
 #include <iostream>
 using namespace std;
@@ -237,6 +247,12 @@ int main()
     return 0;
 }
 ```
+
+
+> Output
+> ![Screenshot bagian x](output/no3.png)
+
+
 ### Soal 3
 ```go
 #include <iostream>
