@@ -89,21 +89,57 @@ Modul 3 ABSTRACT DATA TYPE (ADT)/Output/Soalno2.jpg
 > ![Screenshot bagian x](Output/Soalno2.jpg)
 
 
+### pelajaran.cpp
 ```go
 #include <iostream>
+#include "pelajaran.h"
+
+pelajaran create_pelajaran(string namapel, string kodepel) {
+    pelajaran p;
+    p.namakapel = namapel;
+    p.kodewapel = kodepel;
+    return p;
+}
+
+void tampli_pelajaran(pelajaran pel) {
+    cout << "name pelajaran : " << pel.namakapel << endl;
+    cout << "nilai : " << pel.kodewapel << endl;
+}
+```
+### pelajaran.h
+```go
+#ifndef PELAJARAN_H
+#define PELAJARAN_H
+
+#include <string>
 using namespace std;
-int main()
-{
-    int W, X, Y;
-    float Z;
-    X = 7;
-    Y = 3;
-    W = 1;
-    Z = (X + Y) / (Y + W);
-    cout << "Nilai z = " << Z << endl;
+
+struct pelajaran {
+    string namakapel;
+    string kodewapel;
+};
+
+pelajaran create_pelajaran(string namapel, string kodepel);
+void tampli_pelajaran(pelajaran pel);
+
+#endif
+```
+
+### main.cpp
+```go
+#include <iostream>
+#include "pelajaran.h"
+using namespace std;
+
+int main() {
+    string namapel = "$truktur Data";
+    string kodepel = "$TD";
+    pelajaran pel = create_pelajaran(namapel, kodepel);
+    tampli_pelajaran(pel);
     return 0;
 }
 ```
+
 ### Soal 3
 ```go
 #include <iostream>
