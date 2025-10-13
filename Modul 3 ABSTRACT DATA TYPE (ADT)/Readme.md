@@ -139,6 +139,8 @@ int main() {
     return 0;
 }
 ```
+> Output
+> ![Screenshot bagian x](Output/no2.png)
 
 ### Soal 3
 ```go
