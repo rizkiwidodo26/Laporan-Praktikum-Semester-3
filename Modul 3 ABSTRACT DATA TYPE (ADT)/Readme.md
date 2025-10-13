@@ -83,28 +83,10 @@ int main() {
 > Output
 > ![Screenshot bagian x](https://github.com/rizkiwidodo26/Laporan-Praktikum-Semester-3/blob/master/Modul%203%20ABSTRACT%20DATA%20TYPE%20(ADT)/Output/no1.png)
 
-### Soal 2
 
-Buatlah ADT pelajaran sebagai berikut di dalam file “pelajaran.h”:
-Type pelajaran <
-namaMapel : string
-kodeMapel : string
-> 
-function create_pelajaran( namapel : string, 
- kodepel : string ) → pelajaran
-procedure tampil_pelajaran( input pel : pelajaran )
-Buatlah implementasi ADT pelajaran pada file “pelajaran.cpp
-Cobalah hasil implementasi ADT pada file “main.cpp”
-using namespace std;
-int main(){
-string namapel = "Struktur Data";
-string kodepel = "STD";
-pelajaran pel = create_pelajaran(namapel,kodepel);
-tampil_pelajaran(pel);
-return 0;
-}
-Contoh output hasil: nama pelajaran : Struktur Data
-                     nilai : STD
+Modul 3 ABSTRACT DATA TYPE (ADT)/Output/Soalno2.jpg
+### Soal 2
+> ![Screenshot bagian x](Output/Soalno2.jpg)
 
 
 ```go
