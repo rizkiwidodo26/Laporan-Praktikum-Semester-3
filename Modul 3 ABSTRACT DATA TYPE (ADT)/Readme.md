@@ -1,4 +1,4 @@
-# <h1 align="center">Laporan Praktikum Modul 3 <br> Pengenalan C++ </h1>
+# <h1 align="center">Laporan Praktikum Modul 3 <br> ABSTRACT DATA TYPE (ADT) </h1>
 <p align="center">RIZKI WIDODO - 103112400136 </p>
 
 ## Dasar Teori
