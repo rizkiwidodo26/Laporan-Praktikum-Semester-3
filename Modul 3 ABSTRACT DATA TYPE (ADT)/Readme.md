@@ -143,63 +143,67 @@ int main() {
 > ![Screenshot bagian x](Output/no2.png)
 
 ### Soal 3
+
+Buatlah program dengan ketentuan :
+- 2 buah array 2D integer berukuran 3x3 dan 2 buah pointer integer
+- fungsi/prosedur yang menampilkan isi sebuah array integer 2D
+- fungsi/prosedur yang akan menukarkan isi dari 2 array integer 2D pada posisi tertentu
+
+STRUKTUR DATA 35
+- fungsi/prosedur yang akan menukarkan isi dari variabel yang ditunjuk oleh 2 buah
+pointer
+
 ```go
 #include <iostream>
 using namespace std;
-int main()
-{
-    double tot_pembelian, diskon;
-    cout << "total pembelian: Rp";
-    cin >> tot_pembelian;
-    diskon = 0;
-    if (tot_pembelian >= 100000)
-        diskon = 0.05 * tot_pembelian;
-    cout << "besar diskon = Rp" << diskon;
-}
 
-
-
-int main()
-{
-    double tot_pembelian, diskon;
-    cout << "total pembelian: Rp";
-    cin >> tot_pembelian;
-    diskon = 0;
-    if (tot_pembelian >= 100000)
-        diskon = 0.05 * tot_pembelian;
-    else
-        diskon = 0;
-    cout << "besar diskon = Rp" << diskon;
-}
-
-
-
-int main()
-{
-    int kode_hari;
-    cout << "Menentukan hari kerja/libur\n"<<endl;
-    cout << "1=Senin 3=Rabu 5=Jumat 7=Minggu "<<endl;
-    cout << "2=Selasa 4=Kamis 6=Sabtu "<<endl;
-    cin >> kode_hari;
-    switch (kode_hari)
-    {
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-    case 5:
-        cout<<"Hari Kerja";
-        break;
-    case 6:
-    case 7:
-        cout<<"Hari Libur";
-        break;
-    default:
-        cout<<"Kode masukan salah!!!";
+void tampilArray(int arr[3][3], string nama) {
+    cout << "\nIsi " << nama << ":\n";
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            cout << arr[i][j] << " ";
+        }
+        cout << endl;
     }
+}
+
+void tukarPosisi(int arr1[3][3], int arr2[3][3], int baris, int kolom) {
+    int temp = arr1[baris][kolom];
+    arr1[baris][kolom] = arr2[baris][kolom];
+    arr2[baris][kolom] = temp;
+}
+
+int main() {
+    int array1[3][3] = {{1,2,3}, {4,5,6}, {7,8,9}};
+    int array2[3][3] = {{9,8,7}, {6,5,4}, {3,2,1}};
+    
+    int *ptr1 = &array1[0][0];
+    int *ptr2 = &array2[0][0];
+    
+    cout << "Sebelum penukaran:";
+    tampilArray(array1, "Array 1");
+    tampilArray(array2, "Array 2");
+    
+    int baris, kolom;
+    cout << "\nMasukkan posisi untuk ditukar (baris kolom): ";
+    cin >> baris >> kolom;
+    
+    if (baris >= 0 && baris < 3 && kolom >= 0 && kolom < 3) {
+        tukarPosisi(array1, array2, baris, kolom);
+        cout << "\nSetelah penukaran:";
+        tampilArray(array1, "Array 1");
+        tampilArray(array2, "Array 2");
+    } else {
+        cout << "Posisi tidak valid!\n";
+    }
+    
     return 0;
 }
 ```
+> Output
+> ![Screenshot bagian x](Output/no3.png)
+
+
 ### Soal 4
 ```go
 #include <iostream>
