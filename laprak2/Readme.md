@@ -1,4 +1,4 @@
-# <h1 align="center">Laporan Praktikum Modul 2 <br> Nama Modul</h1>
+# <h1 align="center">Laporan Praktikum Modul 2 <br> Pengenalan C++ </h1>
 <p align="center">Rizki Widodo - 103112400136</p>
 
 ## Dasar Teori
