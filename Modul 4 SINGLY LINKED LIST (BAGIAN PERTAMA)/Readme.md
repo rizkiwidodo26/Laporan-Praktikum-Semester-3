@@ -224,33 +224,85 @@ int main() {
 
 ```
 > Output
-> ![Screenshot bagian x](output/no1.png)
+> ![Screenshot bagian x](Output/no1.png)
+
+penjelasan kode
+
+Antrian Pembeli menggunakan struktur data queue yang diimplementasikan dengan singly linked list untuk menyimpan data pembeli berupa nama dan pesanan, dimana program memiliki fungsi tambahAntrian untuk menambahkan node baru di akhir list, layaniAntrian untuk menghapus node di depan list sesuai prinsip FIFO (First-In-First-Out), dan tampilkanAntrian untuk menelusuri seluruh node dari depan ke belakang, dengan menggunakan dua pointer front dan rear untuk efisiensi operasi.
 
 
 ### Soal 2
 
-2. buatlah program kode untuk membalik (reverse) singly linked list (1-2-3 menjadi 3-2-1)
+buatlah program kode untuk membalik (reverse) singly linked list (1-2-3 menjadi 3-2-1)
 
    
 ```go
 #include <iostream>
 using namespace std;
-int main()
-{
-    int W, X, Y;
-    float Z;
-    X = 7;
-    Y = 3;
-    W = 1;
-    Z = (X + Y) / (Y + W);
-    cout << "Nilai z = " << Z << endl;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+void tambahData(Node* &head, int nilai) {
+    Node* baru = new Node;
+    baru->data = nilai;
+    baru->next = head;
+    head = baru;
+}
+
+void tampilkanList(Node* head) {
+    Node* current = head;
+    while (current != NULL) {
+        cout << current->data;
+        if (current->next != NULL) {
+            cout << " -> ";
+        }
+        current = current->next;
+    }
+    cout << " -> NULL" << endl;
+}
+
+void reverseList(Node* &head) {
+    Node* prev = NULL;
+    Node* current = head;
+    Node* next = NULL;
+    
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    head = prev;
+}
+
+int main() {
+    Node* head = NULL;
+    
+    tambahData(head, 1);
+    tambahData(head, 2);
+    tambahData(head, 3);
+    
+    cout << "List awal: ";
+    tampilkanList(head);
+    
+    reverseList(head);
+    
+    cout << "List setelah reverse: ";
+    tampilkanList(head);
+    
     return 0;
 }
 ```
 
-
 > Output
-> ![Screenshot bagian x](output/no3.png)
+> ![Screenshot bagian x](output/no2.png)
+
+penjelasan kode
+
+Reverse Linked List demonstrasi algoritma untuk membalik urutan node dalam singly linked list dengan menggunakan tiga pointer (prev, current, next) yang bekerja secara iteratif mengubah arah pointer setiap node sehingga urutan 1→2→3→NULL menjadi 3→2→1→NULL, dimana teknik ini mempertahankan data asli namun mengubah hubungan pointer antar node tanpa menggunakan memori tambahan.
 
 
 ### Soal 3
