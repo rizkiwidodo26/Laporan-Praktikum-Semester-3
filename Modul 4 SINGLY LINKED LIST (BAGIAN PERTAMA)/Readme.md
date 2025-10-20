@@ -311,7 +311,7 @@ int main() {
 
 ```
 > Output
-> ![Screenshot bagian x](Output/no1.png)
+> ![Screenshot bagian x](output/no1.png)
 
 penjelasan kode
 
