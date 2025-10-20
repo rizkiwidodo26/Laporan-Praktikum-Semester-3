@@ -909,7 +909,7 @@ int main() {
 ```
 
 > Output
-> ![Screenshot bagian x](https://github.com/Nashiw/Laporan-Praktikum/blob/main/Modul%205/jawaban%202.png)
+> ![Screenshot bagian x](Output/no2.png)
 
 Program ini merupakan sistem manajemen buku perpustakaan yang menggunakan struktur data linked list untuk menyimpan data buku yang terdiri dari ISBN, judul, dan penulis, dengan fitur-fitur dasar seperti menambah, menghapus, memperbarui, dan melihat data buku, serta telah ditambahkan tiga fungsi pencarian (searching) yang memungkinkan pengguna untuk mencari buku berdasarkan judul dengan pencarian parsial yang dapat menemukan buku yang mengandung kata kunci tertentu dalam judulnya, berdasarkan penulis yang dapat menampilkan semua buku dari penulis yang dicari, dan berdasarkan ISBN dengan pencarian eksak yang hanya mengembalikan satu hasil karena sifat ISBN yang unik, di mana semua operasi pencarian dilakukan menggunakan linear search dengan menelusuri setiap node dalam linked list secara berurutan dari awal hingga akhir.
 
