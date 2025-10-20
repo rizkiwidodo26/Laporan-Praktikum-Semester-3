@@ -195,30 +195,117 @@ buatlah single linked list untuk Antrian yang menyimpan data pembeli( nama dan p
 #include <string>
 using namespace std;
 
-// Definisi struct
-struct Mahasiswa {
+struct Pembeli {
     string nama;
-    string nim;
-    float ipk;
+    string pesanan;
+    Pembeli* next;
 };
 
+Pembeli* buatPembeli(string nama, string pesanan) {
+    Pembeli* baru = new Pembeli();
+    baru->nama = nama;
+    baru->pesanan = pesanan;
+    baru->next = nullptr;
+    return baru;
+}
+
+void tambahAntrian(Pembeli* &head, Pembeli* &tail, string nama, string pesanan) {
+    Pembeli* baru = buatPembeli(nama, pesanan);
+    
+    if (head == nullptr) {
+        head = baru;
+        tail = baru;
+    } else {
+        tail->next = baru;
+        tail = baru;
+    }
+    cout << "Pembeli " << nama << " telah ditambahkan ke antrian.\n";
+}
+
+void layaniAntrian(Pembeli* &head, Pembeli* &tail) {
+    if (head == nullptr) {
+        cout << "Antrian kosong! Tidak ada yang dilayani.\n";
+        return;
+    }
+    
+    Pembeli* hapus = head;
+    cout << "Melayani: " << head->nama << " - Pesanan: " << head->pesanan << endl;
+    
+    head = head->next;
+    
+    if (head == nullptr) {
+        tail = nullptr;
+    }
+    
+    delete hapus;
+}
+
+void tampilkanAntrian(Pembeli* head) {
+    if (head == nullptr) {
+        cout << "Antrian kosong!\n";
+        return;
+    }
+    
+    Pembeli* current = head;
+    int counter = 1;
+    
+    cout << "=== DAFTAR ANTRIAN ===" << endl;
+    while (current != nullptr) {
+        cout << counter << ". Nama: " << current->nama 
+             << " | Pesanan: " << current->pesanan << endl;
+        current = current->next;
+        counter++;
+    }
+}
+
+void hapusSemuaAntrian(Pembeli* &head, Pembeli* &tail) {
+    while (head != nullptr) {
+        Pembeli* hapus = head;
+        head = head->next;
+        delete hapus;
+    }
+    tail = nullptr;
+}
+
 int main() {
-
-    Mahasiswa mhs1;
-
-    cout << "Masukkan Nama Mahasiswa: ";
-    getline(cin, mhs1.nama);
-    // cin >> mhs1.nama;
-    cout << "Masukkan NIM Mahasiswa : ";
-    cin >> mhs1.nim;
-    cout << "Masukkan IPK Mahasiswa : ";
-    cin >> mhs1.ipk;
-
-    cout << "\n=== Data Mahasiswa ===" << endl;
-    cout << "Nama : " << mhs1.nama << endl;
-    cout << "NIM  : " << mhs1.nim << endl;
-    cout << "IPK  : " << mhs1.ipk << endl;
-
+    Pembeli* head = nullptr;
+    Pembeli* tail = nullptr;
+    int pilihan;
+    string nama, pesanan;
+    
+    do {
+        cout << "\n=== MENU ANTRIAN ===" << endl;
+        cout << "1. Tambah Antrian" << endl;
+        cout << "2. Layani Antrian" << endl;
+        cout << "3. Tampilkan Antrian" << endl;
+        cout << "4. Keluar" << endl;
+        cout << "Pilihan: ";
+        cin >> pilihan;
+        
+        switch (pilihan) {
+            case 1:
+                cout << "Nama Pembeli: ";
+                cin.ignore();
+                getline(cin, nama);
+                cout << "Pesanan: ";
+                getline(cin, pesanan);
+                tambahAntrian(head, tail, nama, pesanan);
+                break;
+            case 2:
+                layaniAntrian(head, tail);
+                break;
+            case 3:
+                tampilkanAntrian(head);
+                break;
+            case 4:
+                hapusSemuaAntrian(head, tail);
+                cout << "Program selesai.\n";
+                break;
+            default:
+                cout << "Pilihan tidak valid!\n";
+        }
+    } while (pilihan != 4);
+    
     return 0;
 }
 
