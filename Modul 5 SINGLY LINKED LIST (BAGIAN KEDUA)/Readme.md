@@ -599,7 +599,7 @@ int main() {
 ```
 
 > Output
-> ![Screenshot bagian x](https://github.com/Nashiw/Laporan-Praktikum/blob/main/Modul%205/jawaban%201.png)
+> ![Screenshot bagian x](Output/no1.png)
 
 Program antrian pembeli ini menggunakan struktur data linked list untuk mengelola antrian dengan sistem FIFO (First In First Out) dimana pembeli yang pertama masuk akan dilayani pertama kali. Program memiliki fitur tambah antrian di belakang, layani antrian di depan, tampilkan seluruh antrian, dan fitur pencarian (searching) yang dapat mencari pembeli berdasarkan nama dengan cara menelusuri setiap node secara berurutan dari depan ke belakang hingga data ditemukan atau sampai akhir antrian. Jika pembeli ditemukan, program akan menampilkan posisi antrian dan detail pesanan, sedangkan jika tidak ditemukan akan memberikan pemberitahuan yang sesuai.
  
