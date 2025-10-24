@@ -3,7 +3,7 @@
 
 ## Dasar Teori
 
-Doubly Linked List adalah struktur data yang terdiri dari rangkaian elemen (node) yang saling terhubung melalui dua pointer, yaitu `next` untuk menunjuk ke elemen berikutnya dan `prev` untuk menunjuk ke elemen sebelumnya, sehingga memungkinkan traversal data secara maju dan mundur. Struktur ini memiliki dua penunjuk utama, yaitu `first` yang menunjuk ke elemen pertama dan `last` yang menunjuk ke elemen terakhir. Dengan adanya dua arah hubungan antar node, operasi seperti penyisipan, penghapusan, pencarian, dan pembaruan data dapat dilakukan lebih fleksibel dibandingkan dengan Singly Linked List, meskipun membutuhkan memori lebih besar karena setiap node menyimpan dua pointer.
+Doubly Linked List merupakan struktur data linear yang terdiri dari serangkaian elemen yang saling terhubung melalui pointer, dimana setiap elemen (node) memiliki dua penunjuk yaitu next yang menunjuk ke elemen berikutnya dan prev yang menunjuk ke elemen sebelumnya, serta dua pointer utama first dan last yang masing-masing menunjuk ke elemen pertama dan terakhir dalam list. Struktur ini memungkinkan traversing (penelusuran) dua arah (maju dan mundur) serta operasi penyisipan (insert) dan penghapusan (delete) yang lebih fleksibel dibanding Single Linked List, baik di posisi pertama (insertFirst/deleteFirst), terakhir (insertLast/deleteLast), maupun setelah atau sebelum elemen tertentu (insertAfter/insertBefore dan deleteAfter/deleteBefore), dengan kompleksitas waktu O(1) untuk operasi di ujung list jika memiliki akses langsung ke node yang dituju.
 
 ## Guide
 
