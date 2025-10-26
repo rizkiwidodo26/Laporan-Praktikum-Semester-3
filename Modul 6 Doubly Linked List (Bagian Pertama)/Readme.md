@@ -565,7 +565,7 @@ int main() {
 ```
 
 > Output
-> ![Screenshot bagian x](Output/Output_no1.png)
+> ![Screenshot bagian x](Output/no1.png)
 
 Kode program ini mengimplementasikan Doubly Linked List untuk mengelola data kendaraan yang terdiri dari nomor polisi, warna, dan tahun pembuatan, dimana program memungkinkan pengguna untuk menambahkan data baru dengan pengecekan duplikasi nomor polisi, menampilkan seluruh data dalam format terstruktur, mencari data berdasarkan nomor polisi, serta menghapus data dengan menggunakan tiga metode penghapusan yang berbeda (deleteFirst, deleteLast, deleteAfter) yang disesuaikan berdasarkan posisi node dalam list, di mana setiap elemen memiliki pointer prev dan next sehingga memungkinkan traversing dua arah dan operasi insert/delete yang lebih efisien dibanding singly linked list.
 
