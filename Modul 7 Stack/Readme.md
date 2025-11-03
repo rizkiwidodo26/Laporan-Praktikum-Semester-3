@@ -197,7 +197,7 @@ int main() {
 ```
 
 > Output
-> ![Screenshot bagian x](Output/Output_no1.png)
+> ![Screenshot bagian x](Output/no1.png)
 
 PENJELASAN SINGKAT PROGRAM NO 1
 
@@ -321,7 +321,7 @@ int main() {
 ```
 
 > Output
-> ![Screenshot bagian x](Output/Output_no2.png)
+> ![Screenshot bagian x](Output/no2.png)
 
 PENJELASAN SINGKAT PROGRAM NOMOR 2
 
@@ -445,7 +445,7 @@ int main() {
 ```
 
 > Output
-> ![Screenshot bagian x](Output/Output_no3.png)
+> ![Screenshot bagian x](Output/no3.png)
 
 PENJELASAN SINGKAT PROGRAM NOMOR 
 
