@@ -314,56 +314,66 @@ queue Alternatif 3 (head dan tail berputar).
 
 #### queue.cpp
 ```c++
+#include <iostream>
 #include "queue.h"
+using namespace std;
 
-QueueAlt3::QueueAlt3() {
-    head = -1;
-    tail = -1;
+void createQueue(Queue &Q) {
+    Q.head = -1;
+    Q.tail = -1;
 }
 
-bool QueueAlt3::isEmptyQueue() {
-    return (head == -1 && tail == -1);
+bool isEmptyQueue(Queue Q) {
+    return (Q.head == -1 && Q.tail == -1);
 }
 
-bool QueueAlt3::isFullQueue() {
-    return ((tail + 1) % NMax == head);
+bool isFullQueue(Queue Q) {
+    return ((Q.tail + 1) % NMax == Q.head);
 }
 
-void QueueAlt3::enqueue(infotype x) {
-    if (isFullQueue()) {
-        cout << "Antrean Penuh" << endl;
-    } else {
-        if (isEmptyQueue()) {
-            head = 0;
-            tail = 0;
-        } else {
-            tail = (tail + 1) % NMax;
-        }
-        info[tail] = x;
+void enqueue(Queue &Q, infotype x) {
+    if (isFullQueue(Q)) {
+        cout << "Queue penuh!" << endl;
+        return;
     }
-}
-
-void QueueAlt3::dequeue() {
-    if (!isEmptyQueue()) {
-        if (head == tail) {
-            head = -1;
-            tail = -1;
-        } else {
-            head = (head + 1) % NMax;
-        }
-    }
-}
-
-void QueueAlt3::printInfo() {
-    if (isEmptyQueue()) {
-        cout << head << " - " << tail << " | empty queue" << endl;
+    
+    if (isEmptyQueue(Q)) {
+        Q.head = 0;
+        Q.tail = 0;
     } else {
-        cout << head << " - " << tail << " | ";
-        int i = head;
+        Q.tail = (Q.tail + 1) % NMax;
+    }
+    Q.info[Q.tail] = x;
+}
+
+infotype dequeue(Queue &Q) {
+    if (isEmptyQueue(Q)) {
+        cout << "Queue kosong!" << endl;
+        return -1;
+    }
+    
+    infotype x = Q.info[Q.head];
+    
+    if (Q.head == Q.tail) {
+        Q.head = -1;
+        Q.tail = -1;
+    } else {
+        Q.head = (Q.head + 1) % NMax;
+    }
+    
+    return x;
+}
+
+void printInfo(Queue Q) {
+    if (isEmptyQueue(Q)) {
+        cout << Q.head << " - " << Q.tail << " | empty queue" << endl;
+    } else {
+        cout << Q.head << " - " << Q.tail << " | ";
+        
+        int i = Q.head;
         while (true) {
-            cout << info[i];
-            if (i == tail) break;
-            cout << " ";
+            cout << Q.info[i] << " ";
+            if (i == Q.tail) break;
             i = (i + 1) % NMax;
         }
         cout << endl;
@@ -375,10 +385,10 @@ void QueueAlt3::printInfo() {
 > 
 > ![Screenshot bagian x](OUTPUT/unguided3.png)
 > 
-Program ini mengimplementasikan antrean sebagai circular buffer, yang merupakan solusi optimal untuk masalah "penuh semu". Dengan menggunakan operasi modulus, head dan tail diperlakukan seolah-olah array "memutar". Jika tail atau head mencapai batas akhir, ia akan kembali ke indeks 0, memungkinkan ruang kosong di awal array untuk segera digunakan kembali .
+Program ini mengimplementasikan antrian circular sesuai modul Alternatif 3 dimana head dan tail berputar mengelilingi indeks array menggunakan operasi modulus, sehingga ketika mencapai batas NMax-1 akan kembali ke indeks 0, mengatasi masalah "penuh semu" dan mengoptimalkan penggunaan seluruh kapasitas array 5 elemen tanpa perlu pergeseran data, persis seperti konsep circular buffer yang dijelaskan dalam modul.
 
 ## Referensi
 
-1. https://www.geeksforgeeks.org/cpp/queue-cpp-stl/ (diakses pada 15 November 2025)
-2. https://www.programiz.com/dsa/queue (diakses pada 15 November 2025)
-3. https://www.tutorialspoint.com/basic-operations-for-queue-in-data-structure (diakses pada 15 November 2025)
+1. https://www.geeksforgeeks.org/queue-cpp-stl/ (diakses 18 November 2024)
+2. https://www.programiz.com/dsa/queue (diakses 18 November 2024)
+3. https://www.javatpoint.com/circular-queue (diakses 18 November 2024)
