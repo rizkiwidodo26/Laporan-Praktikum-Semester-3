@@ -235,7 +235,7 @@ int main() {
 ```
 > Output soal 1
 > 
-> ![Screenshot bagian x](OUTPUT/unguided1.png)
+> ![Screenshot bagian x](Output/no1.png)
 
 Program ini mengimplementasikan antrean di mana head selalu diam di indeks 0. Saat operasi enqueue, data ditambahkan ke posisi tail. Saat dequeue, data di indeks 0 diambil, dan semua elemen lain di belakangnya digeser secara fisik satu posisi ke depan . Akibatnya, tail ikut mundur. Metode ini tidak efisien karena operasi dequeue memerlukan pergeseran seluruh elemen.
 
