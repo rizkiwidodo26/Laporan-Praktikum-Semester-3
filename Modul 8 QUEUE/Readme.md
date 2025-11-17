@@ -237,7 +237,9 @@ int main() {
 > 
 > ![Screenshot bagian x](Output/no1.png)
 
-Program ini mengimplementasikan antrean di mana head selalu diam di indeks 0. Saat operasi enqueue, data ditambahkan ke posisi tail. Saat dequeue, data di indeks 0 diambil, dan semua elemen lain di belakangnya digeser secara fisik satu posisi ke depan . Akibatnya, tail ikut mundur. Metode ini tidak efisien karena operasi dequeue memerlukan pergeseran seluruh elemen.
+Program ini buat antrian pakai cara pertama di modul. Awalnya head dan tail di -1 kalau antrian kosong. Pas masukin elemen pertama, head berubah jadi 0 dan tail juga jadi 0. Head bakal tetap di 0 selama masih ada isi antrian.
+Setiap kali nambah data, tail yang gerak maju. Kalau ngambil data dari depan, head tetap di 0, tapi semua data di belakangnya digeser ke depan satu per satu, jadi tail otomatis mundur. Kalau setelah ngambil data ternyata antrian jadi kosong, head dan tail balik lagi ke -1.
+Cara ini mirip kayak antrian nyata di loket, tapi kurang efisien karena setiap kali ngambil data dari depan, semua data harus digeser.
 
 ### Soal 2
 Buatlah implementasi ADT Queue pada file “queue.cpp” dengan menerapkan mekanisme
@@ -245,57 +247,55 @@ queue Alternatif 2 (head bergerak, tail bergerak).
 
 #### queue.cpp
 ```c++
+#include <iostream>
 #include "queue.h"
+using namespace std;
 
-QueueAlt2::QueueAlt2() {
-    head = -1;
-    tail = -1;
+void createQueue(Queue &Q) {
+    Q.head = -1;
+    Q.tail = -1;
 }
 
-bool QueueAlt2::isEmptyQueue() {
-    return (head == -1 && tail == -1);
+bool isEmptyQueue(Queue Q) {
+    return (Q.head == -1 && Q.tail == -1);
 }
 
-bool QueueAlt2::isFullQueue() {
-    return (tail == NMax - 1);
+bool isFullQueue(Queue Q) {
+    return (Q.tail == NMax - 1);
 }
 
-void QueueAlt2::enqueue(infotype x) {
-    if (isFullQueue()) {
-        cout << "Antrean Penuh" << endl;
+void enqueue(Queue &Q, infotype x) {
+    if (isFullQueue(Q)) return;
+    if (isEmptyQueue(Q)) {
+        Q.head = 0;
+        Q.tail = 0;
     } else {
-        if (isEmptyQueue()) {
-            head = 0;
-            tail = 0;
-        } else {
-            tail++;
-        }
-        info[tail] = x;
+        Q.tail++;
     }
+    Q.info[Q.tail] = x;
 }
 
-void QueueAlt2::dequeue() {
-    if (!isEmptyQueue()) {
-        if (head == tail) {
-            head = -1;
-            tail = -1;
-        } else {
-            head++;
-        }
-    }
-}
-
-void QueueAlt2::printInfo() {
-    if (isEmptyQueue()) {
-        cout << head << " - " << tail << " | empty queue" << endl;
-
+infotype dequeue(Queue &Q) {
+    if (isEmptyQueue(Q)) return -1;
+    infotype x = Q.info[Q.head];
+    
+    if (Q.head == Q.tail) {
+        Q.head = -1;
+        Q.tail = -1;
     } else {
-        cout << head << " - " << tail << " | ";
-        for (int i = head; i <= tail; i++) {
-            cout << info[i];
-            if (i < tail) {
-                cout << " ";
-            }
+        Q.head++;
+    }
+    
+    return x;
+}
+
+void printInfo(Queue Q) {
+    if (isEmptyQueue(Q)) {
+        cout << Q.head << " - " << Q.tail << " | empty queue" << endl;
+    } else {
+        cout << Q.head << " - " << Q.tail << " | ";
+        for (int i = Q.head; i <= Q.tail; i++) {
+            cout << Q.info[i] << " ";
         }
         cout << endl;
     }
@@ -304,7 +304,7 @@ void QueueAlt2::printInfo() {
 
 > Output soal 2
 > 
-> ![Screenshot bagian x](OUTPUT/unguided2.png)
+> ![Screenshot bagian x](output/no2.png)
 
 Program ini mengimplementasikan antrean yang lebih efisien dengan menggerakkan kedua penunjuk. Saat dequeue, tidak ada pergeseran elemen; sebaliknya, penunjuk head yang bergerak maju (head++). Meskipun dequeue menjadi cepat, metode ini dapat menyebabkan masalah "penuh semu", di mana antrean dianggap penuh karena tail telah mencapai akhir array, meskipun masih ada ruang kosong di bagian depan.
 
