@@ -383,7 +383,7 @@ void printInfo(Queue Q) {
 
 > Output soal 3
 > 
-> ![Screenshot bagian x](OUTPUT/unguided3.png)
+> ![Screenshot bagian x](Output/no3.png)
 > 
 Program ini mengimplementasikan antrian circular sesuai modul Alternatif 3 dimana head dan tail berputar mengelilingi indeks array menggunakan operasi modulus, sehingga ketika mencapai batas NMax-1 akan kembali ke indeks 0, mengatasi masalah "penuh semu" dan mengoptimalkan penggunaan seluruh kapasitas array 5 elemen tanpa perlu pergeseran data, persis seperti konsep circular buffer yang dijelaskan dalam modul.
 
