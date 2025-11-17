@@ -125,116 +125,85 @@ queue Alternatif 1 (head diam, tail bergerak).
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include <iostream> 
-using namespace std; 
-
-const int NMax = 5;
 typedef int infotype;
+const int NMax = 5; // ukuran maksimum queue
 
-class QueueAlt1 {
-private:
+struct Queue {
     infotype info[NMax];
     int head;
     int tail;
-
-public:
-    QueueAlt1(); 
-    bool isEmptyQueue();
-    bool isFullQueue();
-    void enqueue(infotype x);
-    void dequeue();
-    void printInfo();
 };
 
+void createQueue(Queue &Q);
+bool isEmptyQueue(Queue Q);
+bool isFullQueue(Queue Q);
+void enqueue(Queue &Q, infotype x);
+infotype dequeue(Queue &Q);
+void printInfo(Queue Q);
 
-class QueueAlt2 {
-private:
-    infotype info[NMax];
-    int head;
-    int tail;
-
-public:
-    QueueAlt2(); 
-    bool isEmptyQueue();
-    bool isFullQueue();
-    void enqueue(infotype x);
-    void dequeue();
-    void printInfo();
-};
-
-class QueueAlt3 {
-private:
-    infotype info[NMax];
-    int head;
-    int tail;
-
-public:
-    QueueAlt3(); 
-    bool isEmptyQueue();
-    bool isFullQueue();
-    void enqueue(infotype x);
-    void dequeue();
-    void printInfo();
-};
-
-#endif 
+#endif
 ```
 #### queue.cpp
 ```c++
+#include <iostream>
 #include "queue.h"
+using namespace std;
 
-QueueAlt1::QueueAlt1() {
-    head = -1;
-    tail = -1;
+void createQueue(Queue &Q) {
+    Q.head = -1;
+    Q.tail = -1;
 }
 
-bool QueueAlt1::isEmptyQueue() {
-    return (head == -1 && tail == -1);
+bool isEmptyQueue(Queue Q) {
+    return (Q.head == -1 && Q.tail == -1);
 }
 
-bool QueueAlt1::isFullQueue() {
-    return (tail == NMax - 1);
+bool isFullQueue(Queue Q) {
+    return (Q.tail == NMax - 1);
 }
 
-void QueueAlt1::enqueue(infotype x) {
-    if (isFullQueue()) {
-        cout << "Antrean Penuh" << endl;
-    } else {
-        if (isEmptyQueue()) {
-            head = 0;
-            tail = 0;
-            info[0] = x;
-        } else {
-            tail++;
-            info[tail] = x;
-        }
+void enqueue(Queue &Q, infotype x) {
+    if (isFullQueue(Q)) {
+        cout << "Queue penuh, tidak bisa enqueue " << x << endl;
+        return;
     }
-}
-
-void QueueAlt1::dequeue() {
-    if (!isEmptyQueue()) {
-        if (head == tail) {
-            head = -1;
-            tail = -1;
-        } else {
-            for (int i = 0; i < tail; i++) {
-                info[i] = info[i + 1];
-            }
-            tail--;
-        }
-    }
-}
-
-void QueueAlt1::printInfo() {
-    if (isEmptyQueue()) {
-        cout << head << " - " << tail << " | empty queue" << endl;
+    if (isEmptyQueue(Q)) {
+        Q.head = 0;
+        Q.tail = 0;
     } else {
-        cout << head << " - " << tail << " | ";
-        for (int i = head; i <= tail; i++) {
-            cout << info[i];
-            if (i < tail) {
-                cout << " ";
-            }
+        Q.tail++;
+    }
+    Q.info[Q.tail] = x;
+}
+
+infotype dequeue(Queue &Q) {
+    infotype x;
+    if (isEmptyQueue(Q)) {
+        cout << "Queue kosong, tidak bisa dequeue" << endl;
+        return -1; // nilai default jika kosong
+    }
+    x = Q.info[Q.head];
+    if (Q.head == Q.tail) {
+        // hanya satu elemen
+        Q.head = -1;
+        Q.tail = -1;
+    } else {
+        // geser semua elemen ke kiri
+        for (int i = Q.head + 1; i <= Q.tail; i++) {
+            Q.info[i - 1] = Q.info[i];
+        }
+        Q.tail--;
+    }
+    return x;
+}
+
+void printInfo(Queue Q) {
+    if (isEmptyQueue(Q)) {
+        cout << Q.head << " - " << Q.tail << " | empty queue" << endl;
+    } else {
+        cout << Q.head << " - " << Q.tail << " | ";
+        for (int i = Q.head; i <= Q.tail; i++) {
+            cout << Q.info[i] << " ";
         }
         cout << endl;
     }
@@ -242,85 +211,25 @@ void QueueAlt1::printInfo() {
 ```
 #### main.cpp
 ```c++
+#include <iostream>
 #include "queue.h"
+using namespace std;
 
 int main() {
-    cout << "Hello world!" << endl;
-    cout << "========================================" << endl;
-    cout << "PENGUJIAN ALTERNATIF 1 " << endl;
-    cout << " H - T | Queue Info" << endl;
-    cout << "--------------------------------------" << endl;
-
-    QueueAlt1 q1;
-    q1.printInfo();
-    q1.enqueue(5);
-    q1.printInfo();
-    q1.enqueue(2);
-    q1.printInfo();
-    q1.enqueue(7);
-    q1.printInfo();
-    q1.dequeue();
-    q1.printInfo();
-    q1.enqueue(4);
-    q1.printInfo();
-    q1.dequeue();
-    q1.printInfo();
-    q1.dequeue();
-    q1.printInfo();
-    q1.dequeue();
-    q1.printInfo();
-
-    cout << endl;
-    cout << "Hello world!" << endl;
-    cout << "========================================" << endl;
-    cout << "PENGUJIAN ALTERNATIF 2 " << endl;
-    cout << " H - T | Queue Info" << endl;
-    cout << "--------------------------------------" << endl;
-
-    QueueAlt2 q2;
-    q2.printInfo();
-    q2.enqueue(5);
-    q2.printInfo();
-    q2.enqueue(2);
-    q2.printInfo();
-    q2.enqueue(7);
-    q2.printInfo();
-    q2.dequeue();
-    q2.printInfo();
-    q2.enqueue(4);
-    q2.printInfo();
-    q2.dequeue();
-    q2.printInfo();
-    q2.dequeue();
-    q2.printInfo();
-    q2.dequeue();
-    q2.printInfo();
-
-    cout << endl;
-    cout << "Hello world!" << endl;
-    cout << "========================================" << endl;
-    cout << "PENGUJIAN ALTERNATIF 3 " << endl;
-    cout << " H - T | Queue Info" << endl;
-    cout << "--------------------------------------" << endl;
-    QueueAlt3 q3;
-    q3.printInfo();
-    q3.enqueue(5);
-    q3.printInfo();
-    q3.enqueue(2);
-    q3.printInfo();
-    q3.enqueue(7);
-    q3.printInfo();
-    q3.dequeue();
-    q3.printInfo();
-    q3.enqueue(4);
-    q3.printInfo();
-    q3.dequeue();
-    q3.printInfo();
-    q3.dequeue();
-    q3.printInfo();
-    q3.dequeue();
-    q3.printInfo();
-
+    cout << "Hello World" << endl;
+    Queue Q;
+    createQueue(Q);
+    cout << "---" << endl;
+    cout << " H - T \t | Queue info" << endl;
+    cout << "---" << endl;
+    printInfo(Q);
+    enqueue(Q, 5); printInfo(Q);
+    enqueue(Q, 2); printInfo(Q);
+    enqueue(Q, 7); printInfo(Q);
+    dequeue(Q); printInfo(Q);
+    enqueue(Q, 4); printInfo(Q);
+    dequeue(Q); printInfo(Q);
+    dequeue(Q); printInfo(Q);
     return 0;
 }
 ```
