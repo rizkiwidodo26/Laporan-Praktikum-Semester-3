@@ -304,9 +304,9 @@ void printInfo(Queue Q) {
 
 > Output soal 2
 > 
-> ![Screenshot bagian x](output/no2.png)
+> ![Screenshot bagian x](Output/no2.png)
 
-Program ini mengimplementasikan antrean yang lebih efisien dengan menggerakkan kedua penunjuk. Saat dequeue, tidak ada pergeseran elemen; sebaliknya, penunjuk head yang bergerak maju (head++). Meskipun dequeue menjadi cepat, metode ini dapat menyebabkan masalah "penuh semu", di mana antrean dianggap penuh karena tail telah mencapai akhir array, meskipun masih ada ruang kosong di bagian depan.
+"Program ini mengimplementasikan antrian dimana baik head maupun tail dapat bergerak. Saat dequeue, head bergerak maju ke elemen berikutnya tanpa melakukan pergeseran data, sehingga lebih efisien. Namun dalam skenario tertentu, metode ini dapat menyebabkan 'penuh semu' dimana tail mencapai akhir array meskipun masih terdapat ruang kosong di depannya akibat pergerakan head."
 
 ### Soal 3
 Buatlah implementasi ADT Queue pada file “queue.cpp” dengan menerapkan mekanisme
