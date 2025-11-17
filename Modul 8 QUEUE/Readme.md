@@ -110,7 +110,7 @@ int main() {
 
 > Output
 > 
-> ![Screenshot bagian x](OUTPUT/latihan1.png)
+> ![Screenshot bagian x](Output/latihan1.png)
 
 Program guided1.cpp merupakan implementasi struktur data Queue menggunakan array statis berukuran lima elemen yang bekerja dengan prinsip FIFO (First In First Out), di mana elemen pertama yang masuk akan keluar terlebih dahulu. Struktur queue memiliki atribut data, head, dan tail untuk menyimpan elemen serta menandai posisi awal dan akhir antrian. Program menyediakan fungsi enqueue() untuk menambah data ke bagian belakang antrian dan dequeue() untuk menghapus data dari bagian depan dengan menggeser elemen lain ke kiri. Dalam fungsi utama, program menambahkan beberapa elemen ke antrian, menghapus sebagian, dan menampilkan hasilnya setelah setiap operasi. Melalui program ini, pengguna dapat memahami proses dasar antrian seperti penambahan, penghapusan, dan pengecekan kondisi penuh atau kosong menggunakan representasi array di C++.
 
