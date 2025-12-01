@@ -343,7 +343,7 @@ int main() {
 ```
 > Output soal 1,2,3
 > 
-> ![Screenshot bagian x](OUTPUT/unguided1.png)
+> ![Screenshot bagian x](Output/Output1.2.3png)
 
 Kode program ini membuat struktur data Pohon Pencarian Biner (BST) di C++ dengan memakai linked list. Setiap node punya dua penunjuk: satu ke anak kiri dan satu ke anak kanan. Cara kerja program ini cukup sederhana: data dimasukkan secara rekursif dan otomatis tersusun rapi, angka yang lebih kecil selalu diletakkan di kiri dan yang lebih besar di kanan. Ada tiga metode untuk menampilkan isi pohon: In-Order (dari kecil ke besar), Pre-Order (akar dulu), dan Post-Order (anak dulu). Selain itu, program juga bisa menghitung statistik pohon secara rekursif, seperti kedalaman pohon, total node, dan jumlah seluruh nilai data. Semua hasil perhitungan dan tampilan pohon ini langsung dikeluarkan ke layar sesuai contoh data yang ada di modul praktikum.
 
