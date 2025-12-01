@@ -311,24 +311,26 @@ int main() {
     tambahNode(akar, 4);
     tambahNode(akar, 5);
     tambahNode(akar, 3);
-    tambahNode(akar, 6);
+    tambahNode(akar, 6);  // duplikat
     tambahNode(akar, 7);
     
-    // Soal 1
+    // SOAL 1
     cout << "=== HASIL SOAL 1 ===" << endl;
     cout << "Hello World" << endl;
     tampilInOrder(akar);
-    cout << endl << endl;
+    cout << endl;
     
-    // Soal 2
-    cout << "=== HASIL SOAL 2 ===" << endl;
+    // SOAL 2
+    cout << "\n=== HASIL SOAL 2 ===" << endl;
+    cout << "Hello World" << endl;
+    tampilInOrder(akar);
+    cout << endl;
     cout << "kedalaman : " << hitungKedalaman(akar) << endl;
     cout << "jumlah node : " << hitungNode(akar) << endl;
     cout << "total : " << hitungTotal(akar) << endl;
-    cout << endl;
     
-    // Soal 3
-    cout << "=== HASIL SOAL 3 ===" << endl;
+    // SOAL 3
+    cout << "\n=== HASIL SOAL 3 ===" << endl;
     cout << "Pre-order: ";
     tampilPreOrder(akar);
     cout << endl;
@@ -343,11 +345,14 @@ int main() {
 > 
 > ![Screenshot bagian x](OUTPUT/unguided1.png)
 
-Program ini mengimplementasikan struktur data Binary Search Tree (BST) menggunakan bahasa C++ dengan representasi linked list, di mana setiap node memiliki pointer ke anak kiri dan kanan . Program mencakup prosedur penyisipan data (insert) secara rekursif yang secara otomatis mengurutkan nilai—menempatkan angka yang lebih kecil di subtree kiri dan yang lebih besar di subtree kanan—serta menyediakan tiga metode penelusuran (traversal) yaitu In-Order, Pre-Order, dan Post-Order untuk menampilkan isi pohon . Selain operasi dasar, program ini juga dilengkapi dengan fungsi rekursif untuk melakukan perhitungan statistik pohon, meliputi penghitungan kedalaman maksimum (height/depth), jumlah total node, dan penjumlahan seluruh nilai data, yang kemudian hasilnya ditampilkan langsung ke layar sesuai dengan urutan data uji pada modul .
-
+Kode program ini membuat struktur data Pohon Pencarian Biner (BST) di C++ dengan memakai linked list. Setiap node punya dua penunjuk: satu ke anak kiri dan satu ke anak kanan. Cara kerja program ini cukup sederhana: data dimasukkan secara rekursif dan otomatis tersusun rapi, angka yang lebih kecil selalu diletakkan di kiri dan yang lebih besar di kanan. Ada tiga metode untuk menampilkan isi pohon: In-Order (dari kecil ke besar), Pre-Order (akar dulu), dan Post-Order (anak dulu). Selain itu, program juga bisa menghitung statistik pohon secara rekursif, seperti kedalaman pohon, total node, dan jumlah seluruh nilai data. Semua hasil perhitungan dan tampilan pohon ini langsung dikeluarkan ke layar sesuai contoh data yang ada di modul praktikum.
 
 ## Referensi
 
-1. https://www.geeksforgeeks.org/cpp/cpp-binary-search-tree/ (diakses pada 29 November 2025)
-2. https://www.tutorialspoint.com/data_structures_algorithms/tree_data_structure.htm (diakses pada 29 November 2025)
-3. https://www.programiz.com/dsa/binary-search-tree (diakses pada 29 November 2025)
+1. Wikipedia: https://en.wikipedia.org/wiki/Binary_search_tree
+2. Javatpoint: https://www.javatpoint.com/binary-search-tree
+3. HackerEarth: https://www.hackerearth.com/practice/data-structures/trees/binary-search-tree/tutorial/
+4. Baeldung: https://www.baeldung.com/cs/binary-search-trees
+5. StudyTonight: https://www.studytonight.com/data-structures/binary-search-tree
+6. Cornell University: https://www.cs.cornell.edu/courses/cs2110/2014fa/L15-BinarySearchTree/bst.html
+7. University of Washington: https://courses.cs.washington.edu/courses/cse373/20wi/lectures/lecture5.pdf
