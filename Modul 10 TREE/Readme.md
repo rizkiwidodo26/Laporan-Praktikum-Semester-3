@@ -202,7 +202,8 @@ int main()
 > 
 > ![Screenshot bagian x](Output/Guided.png)
 
-Program ini merupakan implementasi lengkap struktur data Binary Search Tree (BST) dalam bahasa C++ yang mencakup operasi manajemen data secara menyeluruh (CRUD). Selain fitur dasar penyisipan (insert) yang menjaga urutan nilai dan pencarian (search) , kode ini dilengkapi dengan mekanisme penghapusan (delete) yang mampu menangani tiga skenario kompleks: menghapus node daun, node dengan satu anak, dan node dengan dua anak menggunakan metode successor (nilai terkecil di subtree kanan) . Fitur pembaruan (update) diimplementasikan secara aman dengan cara menghapus nilai lama terlebih dahulu kemudian menyisipkan nilai baru untuk mencegah kerusakan struktur pohon , di mana hasil akhirnya dapat diverifikasi melalui tiga metode penelusuran (traversal) yaitu Pre-Order, In-Order, dan Post-Order .
+Program ini menyajikan realisasi struktur data Binary Search Tree (BST) secara utuh dalam bahasa C++, yang meliputi seluruh fungsi pengelolaan data (Create, Read, Update, Delete). Di samping kemampuan penyisipan data yang mempertahankan urutan pohon dan pencarian elemen, kode ini juga menyediakan fitur penghapusan node yang dapat menangani tiga kondisi berbeda: node tanpa anak, node dengan satu anak, serta node dengan dua anak melalui pengambilan penerus (successor) dari subtree kanan. Proses pembaruan nilai dilakukan dengan pendekatan yang menjaga integritas struktur, yaitu dengan menghapus nilai lama terlebihbih dahulu lalu memasukkan nilai baru, sehingga pohon tetap memenuhi sifat BST. Keberhasilan operasi-operasi tersebut dapat diperiksa melalui tiga teknik penelusuran yang disediakan, yaitu Pre-Order, In-Order, dan Post-Order.
+
 
 ## UNGUIDED
 
