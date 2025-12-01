@@ -211,132 +211,131 @@ Program ini menyajikan realisasi struktur data Binary Search Tree (BST) secara u
 ```c++
 #ifndef BSTREE_H
 #define BSTREE_H
-#include <iostream>
-
-using namespace std;
-
-typedef int infotype;
-typedef struct Node *address;
 
 struct Node {
-    infotype info;
-    address left;
-    address right;
+    int nilai;
+    Node* kiri;
+    Node* kanan;
 };
 
-address alokasi(infotype x);
-void insertNode(address &root, infotype x);
-void printInorder(address root);
-void printPreorder(address root);
-void printPostorder(address root);
-
-int hitungJumlahNode(address root);
-int hitungTotalInfo(address root);
-int hitungKedalaman(address root);
+Node* buatNode(int x);
+void tambahNode(Node* &akar, int x);
+void tampilInOrder(Node* akar);
+int hitungNode(Node* akar);
+int hitungTotal(Node* akar);
+int hitungKedalaman(Node* akar);
+void tampilPreOrder(Node* akar);
+void tampilPostOrder(Node* akar);
 
 #endif
 ```
 #### bstree.cpp
 ```c++
+#include <iostream>
 #include "bstree.h"
+using namespace std;
 
-address alokasi(infotype x) {
-    address P = new Node;
-    if (P != NULL) {
-        P->info = x;
-        P->left = NULL;
-        P->right = NULL;
-    }
-    return P;
+Node* buatNode(int x) {
+    Node* baru = new Node;
+    baru->nilai = x;
+    baru->kiri = NULL;
+    baru->kanan = NULL;
+    return baru;
 }
 
-void insertNode(address &root, infotype x) {
-    if (root == NULL) {
-        root = alokasi(x);
-    } else {
-        if (x < root->info)
-            insertNode(root->left, x);
-        else if (x > root->info)
-            insertNode(root->right, x);
+void tambahNode(Node* &akar, int x) {
+    if (akar == NULL) {
+        akar = buatNode(x);
+    } else if (x < akar->nilai) {
+        tambahNode(akar->kiri, x);
+    } else if (x > akar->nilai) {
+        tambahNode(akar->kanan, x);
     }
 }
-void printInorder(address root) {
-    if (root == NULL) return;
-    printInorder(root->left);
-    cout << root->info << " ";
-    printInorder(root->right);
+
+void tampilInOrder(Node* akar) {
+    if (akar != NULL) {
+        tampilInOrder(akar->kiri);
+        cout << akar->nilai << " - ";
+        tampilInOrder(akar->kanan);
+    }
 }
 
-void printPreorder(address root) {
-    if (root == NULL) return;
-    cout << root->info << " ";
-    printPreorder(root->left);
-    printPreorder(root->right);
+int hitungNode(Node* akar) {
+    if (akar == NULL) return 0;
+    return 1 + hitungNode(akar->kiri) + hitungNode(akar->kanan);
 }
 
-void printPostorder(address root) {
-    if (root == NULL) return;
-    printPostorder(root->left);
-    printPostorder(root->right);
-    cout << root->info << " ";
+int hitungTotal(Node* akar) {
+    if (akar == NULL) return 0;
+    return akar->nilai + hitungTotal(akar->kiri) + hitungTotal(akar->kanan);
 }
 
-int hitungJumlahNode(address root) {
-    return (root == NULL) ? 0 : 1 + hitungJumlahNode(root->left) + hitungJumlahNode(root->right);
+int hitungKedalaman(Node* akar) {
+    if (akar == NULL) return 0;
+    int kiri = hitungKedalaman(akar->kiri);
+    int kanan = hitungKedalaman(akar->kanan);
+    if (kiri > kanan) return kiri + 1;
+    return kanan + 1;
 }
 
-int hitungTotalInfo(address root) {
-    return (root == NULL) ? 0 : root->info + hitungTotalInfo(root->left) + hitungTotalInfo(root->right);
+void tampilPreOrder(Node* akar) {
+    if (akar != NULL) {
+        cout << akar->nilai << " - ";
+        tampilPreOrder(akar->kiri);
+        tampilPreOrder(akar->kanan);
+    }
 }
 
-int hitungKedalaman(address root) {
-    if (root == NULL) return 0;
-    int lDepth = hitungKedalaman(root->left);
-    int rDepth = hitungKedalaman(root->right);
-    return 1 + ((lDepth > rDepth) ? lDepth : rDepth);
+void tampilPostOrder(Node* akar) {
+    if (akar != NULL) {
+        tampilPostOrder(akar->kiri);
+        tampilPostOrder(akar->kanan);
+        cout << akar->nilai << " - ";
+    }
 }
 ```
 #### main.cpp
 ```c++
 #include <iostream>
 #include "bstree.h"
-#include "bstree.cpp" 
-
 using namespace std;
 
 int main() {
-    address root = NULL;
-
-    insertNode(root, 1);
-    insertNode(root, 2);
-    insertNode(root, 6);
-    insertNode(root, 4);
-    insertNode(root, 5);
-    insertNode(root, 3);
-    insertNode(root, 6); 
-    insertNode(root, 7);
-
-    cout << "Hello World" << endl << endl;
+    Node* akar = NULL;
     
-    cout << "";
-    printInorder(root);
+    // Masukkan data
+    tambahNode(akar, 1);
+    tambahNode(akar, 2);
+    tambahNode(akar, 6);
+    tambahNode(akar, 4);
+    tambahNode(akar, 5);
+    tambahNode(akar, 3);
+    tambahNode(akar, 6);
+    tambahNode(akar, 7);
+    
+    // Soal 1
+    cout << "=== HASIL SOAL 1 ===" << endl;
+    cout << "Hello World" << endl;
+    tampilInOrder(akar);
     cout << endl << endl;
-
-    cout << "Hasil Latihan 2" << endl;
-    cout << "Kedalaman Tree : " << hitungKedalaman(root) << endl;
-    cout << "Jumlah Node    : " << hitungJumlahNode(root) << endl;
-    cout << "Total Info     : " << hitungTotalInfo(root) << endl;
-    cout << endl;
-
-    cout << "Hasil Latihan 3" << endl;
-    cout << "Pre-Order  : ";
-    printPreorder(root);
+    
+    // Soal 2
+    cout << "=== HASIL SOAL 2 ===" << endl;
+    cout << "kedalaman : " << hitungKedalaman(akar) << endl;
+    cout << "jumlah node : " << hitungNode(akar) << endl;
+    cout << "total : " << hitungTotal(akar) << endl;
     cout << endl;
     
-    cout << "Post-Order : ";
-    printPostorder(root);
+    // Soal 3
+    cout << "=== HASIL SOAL 3 ===" << endl;
+    cout << "Pre-order: ";
+    tampilPreOrder(akar);
     cout << endl;
-
+    cout << "Post-order: ";
+    tampilPostOrder(akar);
+    cout << endl;
+    
     return 0;
 }
 ```
