@@ -638,7 +638,7 @@ int main() {
 ```
 > Output soal 2
 > 
-> ![Screenshot bagian x](Outpout/soal2.png)
+> ![Screenshot bagian x](Output/soal2.png)
 program menampilkan berupa data pegawai dan anak-anaknya. Misalnya, Pegawai dengan ID 101 memiliki anak “Budi” dan “Ani”, Pegawai 102 memiliki anak “Siti”, dan Pegawai 103 tidak memiliki anak. Setelah dilakukan operasi penghapusan (delete child dan delete parent), hasil menunjukkan bahwa penghapusan anak hanya menghapus anak tertentu dari induknya, sedangkan penghapusan induk akan sekaligus menghapus seluruh anak yang terhubung dengannya. Ini memperlihatkan implementasi logika penghapusan yang konsisten dalam struktur Multi Linked List.
 
 2. Implementasikan ADT Multi Linked List dan ADT Linked List untuk studi kasus data mahasiswa (Nama, NIM, Jenis Kelamin, IPK) beserta seluruh operasi manipulasi data (insert, delete, find, print) menggunakan bahasa C++ sesuai spesifikasi header yang diberikan.
