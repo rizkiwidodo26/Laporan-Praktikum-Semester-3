@@ -144,60 +144,64 @@ multilist.h. Buat main.cpp untuk pemanggilan fungsi-fungsi tersebut.
 
 #include <iostream>
 #include <string>
-#define Nil NULL
-
 using namespace std;
 
-typedef int infotypeinduk;
-typedef string infotypeanak; 
+#define Nil NULL
 
-typedef struct elemen_list_induk *address;
-typedef struct elemen_list_anak *address_anak;
+typedef string infotypeanak;   // Menggunakan string untuk nama anak
+typedef int infotypeinduk;     // Menggunakan int untuk ID pegawai
+typedef bool boolean;
 
-struct elemen_list_anak {
+// Struktur untuk list anak
+struct element_list_anak {
     infotypeanak info;
-    address_anak next;
-    address_anak prev;
+    element_list_anak* next;
+    element_list_anak* prev;
 };
 
 struct listanak {
-    address_anak first;
-    address_anak last;
+    element_list_anak* first;
+    element_list_anak* last;
 };
 
-struct elemen_list_induk {
+// Struktur untuk list induk
+struct element_list_induk {
     infotypeinduk info;
     listanak lanak;
-    address next;
-    address prev;
+    element_list_induk* next;
+    element_list_induk* prev;
 };
 
 struct listinduk {
-    address first;
-    address last;
+    element_list_induk* first;
+    element_list_induk* last;
 };
 
-bool ListEmpty(listinduk L);
-bool ListEmptyAnak(listanak L);
+typedef element_list_induk* address;
+typedef element_list_anak* address_anak;
+
+// Deklarasi fungsi
+boolean ListEmpty(listinduk L);
+boolean ListEmptyAnak(listanak L);
 
 void CreateList(listinduk &L);
 void CreateListAnak(listanak &L);
 
 address alokasi(infotypeinduk X);
-address_anak alokasiAnak(infotypeanak X);
+address_anak alokasianak(infotypeanak X);
 void dealokasi(address P);
-void dealokasiAnak(address_anak P);
+void dealokasianak(address_anak P);
 
 address findElm(listinduk L, infotypeinduk X);
-address_anak findElmAnak(listanak L, infotypeanak X);
+address_anak findElmAnak(listanak Lanak, infotypeanak X);
 
 void insertFirst(listinduk &L, address P);
-void insertLast(listinduk &L, address P);
 void insertAfter(listinduk &L, address P, address Prec);
+void insertLast(listinduk &L, address P);
 
 void insertFirstAnak(listanak &L, address_anak P);
-void insertLastAnak(listanak &L, address_anak P);
 void insertAfterAnak(listanak &L, address_anak P, address_anak Prec);
+void insertLastAnak(listanak &L, address_anak P);
 
 void delFirst(listinduk &L, address &P);
 void delLast(listinduk &L, address &P);
@@ -210,21 +214,28 @@ void delAfterAnak(listanak &L, address_anak &P, address_anak Prec);
 void delPAnak(listanak &L, infotypeanak X);
 
 void printInfo(listinduk L);
+int nbList(listinduk L);
+void printInfoAnak(listanak Lanak);
+int nbListAnak(listanak Lanak);
 
-#endif
+void delAll(listinduk &L);
+
+#endif 
 ```
 #### multilist.cpp
 ```c++
 #include "multilist.h"
 
-bool ListEmpty(listinduk L) {
+// ===== FUNGSI PENGECEKAN LIST KOSONG =====
+boolean ListEmpty(listinduk L) {
     return (L.first == Nil);
 }
 
-bool ListEmptyAnak(listanak L) {
+boolean ListEmptyAnak(listanak L) {
     return (L.first == Nil);
 }
 
+// ===== FUNGSI PEMBUATAN LIST KOSONG =====
 void CreateList(listinduk &L) {
     L.first = Nil;
     L.last = Nil;
@@ -235,9 +246,10 @@ void CreateListAnak(listanak &L) {
     L.last = Nil;
 }
 
+// ===== FUNGSI ALOKASI & DEALOKASI =====
 address alokasi(infotypeinduk X) {
-    address P = new elemen_list_induk;
-    if (P != Nil) {
+    address P = new element_list_induk;
+    if(P != Nil) {
         P->info = X;
         CreateListAnak(P->lanak);
         P->next = Nil;
@@ -246,9 +258,9 @@ address alokasi(infotypeinduk X) {
     return P;
 }
 
-address_anak alokasiAnak(infotypeanak X) {
-    address_anak P = new elemen_list_anak;
-    if (P != Nil) {
+address_anak alokasianak(infotypeanak X) {
+    address_anak P = new element_list_anak;
+    if(P != Nil) {
         P->info = X;
         P->next = Nil;
         P->prev = Nil;
@@ -260,30 +272,32 @@ void dealokasi(address P) {
     delete P;
 }
 
-void dealokasiAnak(address_anak P) {
+void dealokasianak(address_anak P) {
     delete P;
 }
 
+// ===== FUNGSI PENCARIAN ELEMEN =====
 address findElm(listinduk L, infotypeinduk X) {
     address P = L.first;
-    while (P != Nil) {
-        if (P->info == X) return P;
+    while(P != Nil) {
+        if(P->info == X) return P;
         P = P->next;
     }
     return Nil;
 }
 
-address_anak findElmAnak(listanak L, infotypeanak X) {
-    address_anak P = L.first;
-    while (P != Nil) {
-        if (P->info == X) return P;
+address_anak findElmAnak(listanak Lanak, infotypeanak X) {
+    address_anak P = Lanak.first;
+    while(P != Nil) {
+        if(P->info == X) return P;
         P = P->next;
     }
     return Nil;
 }
 
+// ===== FUNGSI INSERT UNTUK INDUK =====
 void insertFirst(listinduk &L, address P) {
-    if (ListEmpty(L)) {
+    if(L.first == Nil) {
         L.first = P;
         L.last = P;
     } else {
@@ -293,22 +307,11 @@ void insertFirst(listinduk &L, address P) {
     }
 }
 
-void insertLast(listinduk &L, address P) {
-    if (ListEmpty(L)) {
-        L.first = P;
-        L.last = P;
-    } else {
-        P->prev = L.last;
-        L.last->next = P;
-        L.last = P;
-    }
-}
-
 void insertAfter(listinduk &L, address P, address Prec) {
-    if (Prec != Nil) {
+    if(Prec != Nil) {
         P->next = Prec->next;
         P->prev = Prec;
-        if (Prec->next != Nil) {
+        if(Prec->next != Nil) {
             Prec->next->prev = P;
         } else {
             L.last = P;
@@ -317,19 +320,8 @@ void insertAfter(listinduk &L, address P, address Prec) {
     }
 }
 
-void insertFirstAnak(listanak &L, address_anak P) {
-    if (ListEmptyAnak(L)) {
-        L.first = P;
-        L.last = P;
-    } else {
-        P->next = L.first;
-        L.first->prev = P;
-        L.first = P;
-    }
-}
-
-void insertLastAnak(listanak &L, address_anak P) {
-    if (ListEmptyAnak(L)) {
+void insertLast(listinduk &L, address P) {
+    if(L.first == Nil) {
         L.first = P;
         L.last = P;
     } else {
@@ -339,86 +331,103 @@ void insertLastAnak(listanak &L, address_anak P) {
     }
 }
 
-void delFirstAnak(listanak &L, address_anak &P) {
-    P = L.first;
-    if (P != Nil) {
-        if (L.first == L.last) {
-            L.first = Nil;
-            L.last = Nil;
-        } else {
-            L.first = P->next;
-            L.first->prev = Nil;
-            P->next = Nil;
-        }
+// ===== FUNGSI INSERT UNTUK ANAK =====
+void insertFirstAnak(listanak &L, address_anak P) {
+    if(L.first == Nil) {
+        L.first = P;
+        L.last = P;
+    } else {
+        P->next = L.first;
+        L.first->prev = P;
+        L.first = P;
     }
 }
 
-void delLastAnak(listanak &L, address_anak &P) {
-    P = L.last;
-    if (P != Nil) {
-        if (L.first == L.last) {
-            L.first = Nil;
-            L.last = Nil;
+void insertAfterAnak(listanak &L, address_anak P, address_anak Prec) {
+    if(Prec != Nil) {
+        P->next = Prec->next;
+        P->prev = Prec;
+        if(Prec->next != Nil) {
+            Prec->next->prev = P;
         } else {
-            L.last = P->prev;
-            L.last->next = Nil;
-            P->prev = Nil;
+            L.last = P;
         }
+        Prec->next = P;
     }
 }
 
-void delPAnak(listanak &L, infotypeanak X) {
-    address_anak P = findElmAnak(L, X);
-    if (P != Nil) {
-        if (P == L.first) {
-            delFirstAnak(L, P);
-        } else if (P == L.last) {
-            delLastAnak(L, P);
-        } else {
-            P->prev->next = P->next;
-            P->next->prev = P->prev;
-            P->next = Nil;
-            P->prev = Nil;
-        }
-        dealokasiAnak(P);
+void insertLastAnak(listanak &L, address_anak P) {
+    if(L.first == Nil) {
+        L.first = P;
+        L.last = P;
+    } else {
+        P->prev = L.last;
+        L.last->next = P;
+        L.last = P;
     }
 }
 
+// ===== FUNGSI DELETE UNTUK INDUK =====
 void delFirst(listinduk &L, address &P) {
-    P = L.first;
-    if (P != Nil) {
-        address_anak ChildNode;
-        while (!ListEmptyAnak(P->lanak)) {
-            delFirstAnak(P->lanak, ChildNode);
-            dealokasiAnak(ChildNode);
-        }
-        
-        if (L.first == L.last) {
+    if(L.first != Nil) {
+        P = L.first;
+        if(L.first == L.last) {
             L.first = Nil;
             L.last = Nil;
         } else {
-            L.first = P->next;
+            L.first = L.first->next;
             L.first->prev = Nil;
-            P->next = Nil;
         }
+        P->next = Nil;
+        P->prev = Nil;
+    }
+}
+
+void delLast(listinduk &L, address &P) {
+    if(L.last != Nil) {
+        P = L.last;
+        if(L.first == L.last) {
+            L.first = Nil;
+            L.last = Nil;
+        } else {
+            L.last = L.last->prev;
+            L.last->next = Nil;
+        }
+        P->next = Nil;
+        P->prev = Nil;
+    }
+}
+
+void delAfter(listinduk &L, address &P, address Prec) {
+    if(Prec != Nil && Prec->next != Nil) {
+        P = Prec->next;
+        Prec->next = P->next;
+        if(P->next != Nil) {
+            P->next->prev = Prec;
+        } else {
+            L.last = Prec;
+        }
+        P->next = Nil;
+        P->prev = Nil;
     }
 }
 
 void delP(listinduk &L, infotypeinduk X) {
     address P = findElm(L, X);
-    if (P != Nil) {
-        address Dummy;
-        if (P == L.first) {
-            delFirst(L, Dummy); 
-        } else if (P == L.last) {
-            delLast(L, Dummy); 
+    if(P != Nil) {
+        // Hapus semua anak terlebih dahulu
+        address_anak A;
+        while(P->lanak.first != Nil) {
+            delFirstAnak(P->lanak, A);
+            dealokasianak(A);
+        }
+        
+        // Hapus induk dari list
+        if(P == L.first) {
+            delFirst(L, P);
+        } else if(P == L.last) {
+            delLast(L, P);
         } else {
-            address_anak ChildNode;
-            while (!ListEmptyAnak(P->lanak)) {
-                delFirstAnak(P->lanak, ChildNode);
-                dealokasiAnak(ChildNode);
-            }
-            
             P->prev->next = P->next;
             P->next->prev = P->prev;
             P->next = Nil;
@@ -428,89 +437,208 @@ void delP(listinduk &L, infotypeinduk X) {
     }
 }
 
-void delLast(listinduk &L, address &P) {
-    P = L.last;
-    if(P != Nil){
-        address_anak ChildNode;
-        while (!ListEmptyAnak(P->lanak)) {
-            delFirstAnak(P->lanak, ChildNode);
-            dealokasiAnak(ChildNode);
-        }
-
-        if(L.first == L.last){
-            L.first = Nil; 
+// ===== FUNGSI DELETE UNTUK ANAK =====
+void delFirstAnak(listanak &L, address_anak &P) {
+    if(L.first != Nil) {
+        P = L.first;
+        if(L.first == L.last) {
+            L.first = Nil;
             L.last = Nil;
         } else {
-            L.last = P->prev;
-            L.last->next = Nil;
-            P->prev = Nil;
+            L.first = L.first->next;
+            L.first->prev = Nil;
         }
+        P->next = Nil;
+        P->prev = Nil;
     }
 }
 
+void delLastAnak(listanak &L, address_anak &P) {
+    if(L.last != Nil) {
+        P = L.last;
+        if(L.first == L.last) {
+            L.first = Nil;
+            L.last = Nil;
+        } else {
+            L.last = L.last->prev;
+            L.last->next = Nil;
+        }
+        P->next = Nil;
+        P->prev = Nil;
+    }
+}
+
+void delAfterAnak(listanak &L, address_anak &P, address_anak Prec) {
+    if(Prec != Nil && Prec->next != Nil) {
+        P = Prec->next;
+        Prec->next = P->next;
+        if(P->next != Nil) {
+            P->next->prev = Prec;
+        } else {
+            L.last = Prec;
+        }
+        P->next = Nil;
+        P->prev = Nil;
+    }
+}
+
+void delPAnak(listanak &L, infotypeanak X) {
+    address_anak P = findElmAnak(L, X);
+    if(P != Nil) {
+        if(P == L.first) {
+            delFirstAnak(L, P);
+        } else if(P == L.last) {
+            L.last = P->prev;
+            if(L.last != Nil) {
+                L.last->next = Nil;
+            }
+        } else {
+            P->prev->next = P->next;
+            P->next->prev = P->prev;
+        }
+        dealokasianak(P);
+    }
+}
+
+// ===== FUNGSI OUTPUT & PENGHITUNGAN =====
 void printInfo(listinduk L) {
     address P = L.first;
-    if (ListEmpty(L)) {
-        cout << "List Kosong." << endl;
-    } else {
-        while (P != Nil) {
-            cout << "[Pegawai ID: " << P->info << "] -> Anak: ";
-            address_anak Q = P->lanak.first;
-            if (Q == Nil) {
-                cout << "(Tidak ada anak)";
-            } else {
-                while (Q != Nil) {
-                    cout << Q->info << ", ";
-                    Q = Q->next;
-                }
+    while(P != Nil) {
+        cout << "[Pegawai ID: " << P->info << "] -> Anak: ";
+        
+        address_anak Q = P->lanak.first;
+        if(Q == Nil) {
+            cout << "(Tidak ada anak)";
+        } else {
+            while(Q != Nil) {
+                cout << Q->info;
+                if(Q->next != Nil) cout << ", ";
+                Q = Q->next;
             }
-            cout << endl;
-            P = P->next;
         }
+        cout << endl;
+        P = P->next;
     }
+}
+
+int nbList(listinduk L) {
+    int count = 0;
+    address P = L.first;
+    while(P != Nil) {
+        count++;
+        P = P->next;
+    }
+    return count;
+}
+
+void printInfoAnak(listanak Lanak) {
+    address_anak P = Lanak.first;
+    while(P != Nil) {
+        cout << P->info << " ";
+        P = P->next;
+    }
+    cout << endl;
+}
+
+int nbListAnak(listanak Lanak) {
+    int count = 0;
+    address_anak P = Lanak.first;
+    while(P != Nil) {
+        count++;
+        P = P->next;
+    }
+    return count;
+}
+
+// ===== FUNGSI HAPUS SEMUA =====
+void delAll(listinduk &L) {
+    address P;
+    while(L.first != Nil) {
+        // Hapus semua anak dari induk pertama
+        address_anak A;
+        while(L.first->lanak.first != Nil) {
+            delFirstAnak(L.first->lanak, A);
+            dealokasianak(A);
+        }
+        
+        // Hapus induk
+        P = L.first;
+        L.first = L.first->next;
+        dealokasi(P);
+    }
+    L.last = Nil;
 }
 ```
 #### main.cpp
 ```c++
 #include "multilist.h"
+#include <iostream>
+using namespace std;
 
 int main() {
     listinduk L;
     CreateList(L);
-
-    cout << "=== DEMO MULTI LINKED LIST ===" << endl;
-
-    address P1 = alokasi(101);
-    insertLast(L, P1);
     
-    address P2 = alokasi(102);
-    insertLast(L, P2);
-
-    address P3 = alokasi(103);
-    insertLast(L, P3);
-
-    insertLastAnak(P1->lanak, alokasiAnak("Budi"));
-    insertLastAnak(P1->lanak, alokasiAnak("Ani"));
-
-    insertLastAnak(P2->lanak, alokasiAnak("Siti"));
-
-    cout << "\nData Awal:" << endl;
+    cout << "=== DEMO MULTI LINKED LIST ===" << endl << endl;
+    
+    // 1. Tambahkan 3 pegawai (induk)
+    cout << "1. Menambahkan 3 pegawai..." << endl;
+    address peg1 = alokasi(101);
+    insertLast(L, peg1);
+    
+    address peg2 = alokasi(102);
+    insertLast(L, peg2);
+    
+    address peg3 = alokasi(103);
+    insertLast(L, peg3);
+    cout << "   Pegawai 101, 102, 103 ditambahkan" << endl << endl;
+    
+    // 2. Tambahkan anak untuk pegawai 101
+    cout << "2. Menambahkan anak untuk Pegawai 101..." << endl;
+    address_anak anak1 = alokasianak("Budi");
+    insertLastAnak(peg1->lanak, anak1);
+    
+    address_anak anak2 = alokasianak("Ari");
+    insertLastAnak(peg1->lanak, anak2);
+    cout << "   Anak Budi dan Ari ditambahkan" << endl << endl;
+    
+    // 3. Tambahkan anak untuk pegawai 102
+    cout << "3. Menambahkan anak untuk Pegawai 102..." << endl;
+    address_anak anak3 = alokasianak("Siti");
+    insertLastAnak(peg2->lanak, anak3);
+    cout << "   Anak Siti ditambahkan" << endl << endl;
+    
+    // 4. Tampilkan data awal
+    cout << "Data Awal:" << endl;
     printInfo(L);
-
-    cout << "\nMenghapus anak 'Budi' dari Pegawai 101..." << endl;
-    delPAnak(P1->lanak, "Budi");
+    cout << endl;
+    
+    // 5. Hapus anak 'Budi' dari pegawai 101
+    cout << "Menghapus anak 'Budi' dari Pegawai 101..." << endl;
+    delPAnak(peg1->lanak, "Budi");
     printInfo(L);
-
-    cout << "\nMenghapus Pegawai 102 (beserta anaknya 'Siti')..." << endl;
+    cout << endl;
+    
+    // 6. Hapus pegawai 102 (beserta anaknya)
+    cout << "Menghapus Pegawai 102 (beserta anaknya 'Siti')..." << endl;
     delP(L, 102);
     printInfo(L);
-
+    cout << endl;
+    
+    // 7. Hapus semua data
+    cout << "Menghapus semua data dari memory..." << endl;
+    delAll(L);
+    if(ListEmpty(L)) {
+        cout << "Semua data berhasil dihapus" << endl;
+    }
+    
+    cout << "\n=== PROGRAM SELESAI ===" << endl;
     return 0;
 }
 ```
-> Output soal 1
+> Output soal 2
 > 
-> ![Screenshot bagian x](OUTPUT/unguided1.png)
+> ![Screenshot bagian x](Outpout/soal2.png)
 program menampilkan berupa data pegawai dan anak-anaknya. Misalnya, Pegawai dengan ID 101 memiliki anak “Budi” dan “Ani”, Pegawai 102 memiliki anak “Siti”, dan Pegawai 103 tidak memiliki anak. Setelah dilakukan operasi penghapusan (delete child dan delete parent), hasil menunjukkan bahwa penghapusan anak hanya menghapus anak tertentu dari induknya, sedangkan penghapusan induk akan sekaligus menghapus seluruh anak yang terhubung dengannya. Ini memperlihatkan implementasi logika penghapusan yang konsisten dalam struktur Multi Linked List.
 
 2. Implementasikan ADT Multi Linked List dan ADT Linked List untuk studi kasus data mahasiswa (Nama, NIM, Jenis Kelamin, IPK) beserta seluruh operasi manipulasi data (insert, delete, find, print) menggunakan bahasa C++ sesuai spesifikasi header yang diberikan.
