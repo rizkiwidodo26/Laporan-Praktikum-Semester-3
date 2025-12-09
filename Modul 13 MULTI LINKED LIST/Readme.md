@@ -134,7 +134,7 @@ Program ini mendemonstrasikan konsep dasar Multi Linked List dengan dua node ind
 >
 > 
 ## UNGUIDED 
-1. Perhatikan program 46 multilist.h, buat multilist.cpp untuk implementasi semua fungsi pada 
+2. Perhatikan program 46 multilist.h, buat multilist.cpp untuk implementasi semua fungsi pada 
 multilist.h. Buat main.cpp untuk pemanggilan fungsi-fungsi tersebut.
 
 #### multilist.h
@@ -641,275 +641,279 @@ int main() {
 > ![Screenshot bagian x](Output/soal2.png)
 Program Multi Linked List yang telah diimplementasikan menampilkan hubungan hierarkis antara data induk (pegawai) dan anak-anaknya, di mana setiap pegawai direpresentasikan sebagai node induk dengan list anak terpisah. Dalam contoh eksekusi, Pegawai ID 101 memiliki anak Budi dan Ari, Pegawai 102 memiliki anak Siti, dan Pegawai 103 tanpa anak. Operasi penghapusan anak Budi hanya menghapus node anak tersebut dari list anak milik Pegawai 101, sementara node induk dan anak lainnya tetap utuh. Sebaliknya, penghapusan Pegawai 102 secara otomatis menghapus seluruh list anak yang terhubung (termasuk Siti) sebelum menghapus node induknya, menunjukkan konsistensi logika penghapusan dalam Multi Linked List yang menjaga integritas struktur dan mencegah memory leak.
 
-2. Implementasikan ADT Multi Linked List dan ADT Linked List untuk studi kasus data mahasiswa (Nama, NIM, Jenis Kelamin, IPK) beserta seluruh operasi manipulasi data (insert, delete, find, print) menggunakan bahasa C++ sesuai spesifikasi header yang diberikan.
+3. Implementasikan ADT Multi Linked List dan ADT Linked List untuk studi kasus data mahasiswa (Nama, NIM, Jenis Kelamin, IPK) beserta seluruh operasi manipulasi data (insert, delete, find, print) menggunakan bahasa C++ sesuai spesifikasi header yang diberikan.
 
-#### multilist.h
+#### circularlist.h
 ```c++
-#ifndef CIRCULARLIST_H_INCLUDED
-#define CIRCULARLIST_H_INCLUDED
+#ifndef CIRCULARLIST_H
+#define CIRCULARLIST_H
 
-#include <iostream>
 #include <string>
-#define Nil NULL
-
 using namespace std;
 
-struct mahasiswa {
+struct infotype {
     string nama;
     string nim;
     char jenis_kelamin;
     float ipk;
 };
 
-typedef mahasiswa infotype;
 typedef struct ElmList *address;
-
 struct ElmList {
     infotype info;
     address next;
-    address prev;
 };
 
 struct List {
     address first;
-    address last;
 };
 
 void createList(List &L);
 address alokasi(infotype x);
-void dealokasi(address P);
+void dealokasi(address &P);
 void insertFirst(List &L, address P);
-void insertLast(List &L, address P);
 void insertAfter(List &L, address Prec, address P);
+void insertLast(List &L, address P);
 void deleteFirst(List &L, address &P);
-void deleteLast(List &L, address &P);
 void deleteAfter(List &L, address Prec, address &P);
-address findElm(List L, string nim);
+void deleteLast(List &L, address &P);
+address findElm(List L, infotype x);
 void printInfo(List L);
-
-address createData(string nama, string nim, char jenis_kelamin, float ipk);
 
 #endif
 ```
-#### multi list.cpp
+#### circularlist.cpp
 ```c++
+#include <iostream>
 #include "circularlist.h"
+using namespace std;
 
 void createList(List &L) {
-    L.first = Nil;
-    L.last = Nil;
+    L.first = NULL;
 }
 
 address alokasi(infotype x) {
     address P = new ElmList;
-    if (P != Nil) {
-        P->info = x;
-        P->next = Nil;
-        P->prev = Nil;
-    }
+    P->info = x;
+    P->next = NULL;
     return P;
 }
 
-address createData(string nama, string nim, char jenis_kelamin, float ipk) {
-    infotype x;
-    address P;
-    x.nama = nama;
-    x.nim = nim;
-    x.jenis_kelamin = jenis_kelamin;
-    x.ipk = ipk;
-    P = alokasi(x);
-    return P;
-}
-
-void dealokasi(address P) {
+void dealokasi(address &P) {
     delete P;
+    P = NULL;
+}
+
+address findElm(List L, infotype x) {
+    if (L.first == NULL) return NULL;
+    
+    address P = L.first;
+    do {
+        if (P->info.nim == x.nim) {
+            return P;
+        }
+        P = P->next;
+    } while (P != L.first);
+    
+    return NULL;
 }
 
 void insertFirst(List &L, address P) {
-    if (L.first == Nil) {
+    if (L.first == NULL) {
         L.first = P;
-        L.last = P;
         P->next = P;
-        P->prev = P;
     } else {
+        address last = L.first;
+        while (last->next != L.first) {
+            last = last->next;
+        }
         P->next = L.first;
-        P->prev = L.last;
-        L.first->prev = P;
-        L.last->next = P;
         L.first = P;
-    }
-}
-
-void insertLast(List &L, address P) {
-    if (L.first == Nil) {
-        L.first = P;
-        L.last = P;
-        P->next = P;
-        P->prev = P;
-    } else {
-        P->next = L.first;
-        P->prev = L.last;
-        L.last->next = P;
-        L.first->prev = P;
-        L.last = P;
+        last->next = P;
     }
 }
 
 void insertAfter(List &L, address Prec, address P) {
-    if (Prec != Nil) {
-        P->next = Prec->next;
-        P->prev = Prec;
-        Prec->next->prev = P;
-        Prec->next = P;
-        
-        if (Prec == L.last) {
-            L.last = P;
+    if (Prec == NULL) return;
+    
+    P->next = Prec->next;
+    Prec->next = P;
+}
+
+void insertLast(List &L, address P) {
+    if (L.first == NULL) {
+        L.first = P;
+        P->next = P;
+    } else {
+        address last = L.first;
+        while (last->next != L.first) {
+            last = last->next;
         }
+        last->next = P;
+        P->next = L.first;
     }
 }
 
 void deleteFirst(List &L, address &P) {
-    P = L.first;
-    if (P != Nil) {
-        if (L.first == L.last) { 
-            L.first = Nil;
-            L.last = Nil;
-        } else {
-            L.first = P->next;
-            L.first->prev = L.last;
-            L.last->next = L.first;
+    if (L.first == NULL) return;
+    
+    if (L.first->next == L.first) {
+        P = L.first;
+        L.first = NULL;
+    } else {
+        address last = L.first;
+        while (last->next != L.first) {
+            last = last->next;
         }
-        P->next = Nil;
-        P->prev = Nil;
-    }
-}
-
-void deleteLast(List &L, address &P) {
-    P = L.last;
-    if (P != Nil) {
-        if (L.first == L.last) {
-            L.first = Nil;
-            L.last = Nil;
-        } else {
-            L.last = P->prev;
-            L.last->next = L.first;
-            L.first->prev = L.last;
-        }
-        P->next = Nil;
-        P->prev = Nil;
+        P = L.first;
+        L.first = P->next;
+        last->next = L.first;
+        P->next = NULL;
     }
 }
 
 void deleteAfter(List &L, address Prec, address &P) {
-    if (Prec != Nil && Prec->next != Prec) { 
-        P = Prec->next;
-        Prec->next = P->next;
-        P->next->prev = Prec;
-        
-        if (P == L.last) {
-            L.last = Prec;
-        } else if (P == L.first) {
-            L.first = P->next;
+    if (Prec == NULL || Prec->next == L.first) return;
+    
+    P = Prec->next;
+    Prec->next = P->next;
+    P->next = NULL;
+}
+
+void deleteLast(List &L, address &P) {
+    if (L.first == NULL) return;
+    
+    if (L.first->next == L.first) {
+        P = L.first;
+        L.first = NULL;
+    } else {
+        address prev = L.first;
+        while (prev->next->next != L.first) {
+            prev = prev->next;
         }
-        
-        P->next = Nil;
-        P->prev = Nil;
+        P = prev->next;
+        prev->next = L.first;
+        P->next = NULL;
     }
 }
 
-address findElm(List L, string nim) {
-    if (L.first == Nil) return Nil;
+void printInfo(List L) {
+    if (L.first == NULL) {
+        cout << "List kosong" << endl;
+        return;
+    }
     
     address P = L.first;
+    cout << "==============================================" << endl;
     do {
-        if (P->info.nim == nim) return P;
+        cout << "Nama  : " << P->info.nama << endl;
+        cout << "NIM   : " << P->info.nim << endl;
+        cout << "JK    : " << P->info.jenis_kelamin << endl;
+        cout << "IPK   : " << P->info.ipk << endl;
+        cout << "----------------------------------------------" << endl;
         P = P->next;
-    } while (P != L.first); 
-    
-    return Nil;
-}
-
-void printInfo(List L) {
-    if (L.first == Nil) {
-        cout << "List Kosong" << endl;
-    } else {
-        address P = L.first;
-        do {
-            cout << "Nama : " << P->info.nama << endl;
-            cout << "NIM  : " << P->info.nim << endl;
-            cout << "L/P  : " << P->info.jenis_kelamin << endl;
-            cout << "IPK  : " << P->info.ipk << endl;
-            cout << endl;
-            P = P->next;
-        } while (P != L.first); 
+    } while (P != L.first);
+    cout << "==============================================" << endl;
 }
 ```
 #### main.cpp
 ```c++
 #include <iostream>
 #include "circularlist.h"
-
 using namespace std;
+
+address createData(string nama, string nim, char jenis_kelamin, float ipk) {
+    infotype x;
+    x.nama = nama;
+    x.nim = nim;
+    x.jenis_kelamin = jenis_kelamin;
+    x.ipk = ipk;
+    return alokasi(x);
+}
 
 int main() {
     List L;
-    address P1 = Nil;
-    address P2 = Nil;
+    address P1, P2;
     infotype x;
     
     createList(L);
-    cout << "coba insert first, last, dan after" << endl;
     
-    P1 = createData("Danu", "04", 'l', 4);
+    cout << "=== PROGRAM CIRCULAR LINKED LIST ===" << endl << endl;
+    
+    cout << "1. Insert First, Last, dan After" << endl;
+    cout << "----------------------------------" << endl;
+    
+    P1 = createData("Danu", "04", 'L', 4.0);
     insertFirst(L, P1);
     
-    P1 = createData("Fahmi", "06", 'l', 3.45);
+    P1 = createData("Fahmi", "06", 'L', 3.45);
     insertLast(L, P1);
     
-    P1 = createData("Bobi", "02", 'l', 3.71);
+    P1 = createData("Bobi", "02", 'L', 3.71);
     insertFirst(L, P1);
     
-    P1 = createData("Ali", "01", 'l', 3.3);
+    P1 = createData("Ali", "01", 'L', 3.3);
     insertFirst(L, P1);
     
-    P1 = createData("Gita", "07", 'p', 3.75);
+    P1 = createData("Gita", "07", 'P', 3.75);
     insertLast(L, P1);
     
-    x.nim = "02"; 
-    P1 = findElm(L, x.nim);
-    if(P1 != Nil) {
-        P2 = createData("Cindi", "03", 'p', 3.5);
-        insertAfter(L, P1, P2);
-    }
+    x.nim = "07";
+    P1 = findElm(L, x);
+    P2 = createData("Cindi", "03", 'P', 3.5);
+    insertAfter(L, P1, P2);
     
-    x.nim = "04"; 
-    P1 = findElm(L, x.nim);
-    if(P1 != Nil) {
-        P2 = createData("Eli", "05", 'p', 3.4);
-        insertAfter(L, P1, P2);
-    }
+    x.nim = "02";
+    P1 = findElm(L, x);
+    P2 = createData("Hilmi", "08", 'P', 3.3);
+    insertAfter(L, P1, P2);
     
-    x.nim = "07"; 
-    P1 = findElm(L, x.nim);
-    if(P1 != Nil) {
-        P2 = createData("Hilmi", "08", 'l', 3.3);
-        insertAfter(L, P1, P2);
-    }
+    x.nim = "04";
+    P1 = findElm(L, x);
+    P2 = createData("Eli", "05", 'P', 3.4);
+    insertAfter(L, P1, P2);
     
+    cout << "Data setelah insert:" << endl;
+    printInfo(L);
+    
+    cout << endl << "2. Delete First" << endl;
+    cout << "-----------------" << endl;
+    deleteFirst(L, P1);
+    dealokasi(P1);
+    printInfo(L);
+    
+    cout << endl << "3. Delete Last" << endl;
+    cout << "----------------" << endl;
+    deleteLast(L, P1);
+    dealokasi(P1);
+    printInfo(L);
+    
+    cout << endl << "4. Delete After elemen dengan NIM 03" << endl;
+    cout << "-----------------------------------------" << endl;
+    x.nim = "03";
+    P1 = findElm(L, x);
+    if (P1 != NULL) {
+        deleteAfter(L, P1, P2);
+        dealokasi(P2);
+    }
     printInfo(L);
     
     return 0;
 }
 ```
 
-> Output soal 2
+> Output soal 3
 >
-> ![Screenshot bagian x](OUTPUT/unguided2.png)
-Circular Linked List yang digunakan untuk mengelola data mahasiswa. Program berhasil melakukan operasi insert first, insert last, dan insert after untuk menambahkan data mahasiswa seperti Ali, Bobi, Cindi, Danu, Eli, dan seterusnya. Setiap data menampilkan atribut Nama, NIM, Jenis Kelamin, dan IPK. Hasil ini membuktikan bahwa struktur Circular Linked List bekerja dengan baik untuk menyisipkan data di berbagai posisi dalam list dan membentuk siklus data yang saling terhubung.
-
+> ![Screenshot bagian x](Output/soal3.png)
+Program circular linked list yang telah dibuat berhasil mengelola data mahasiswa dengan melakukan operasi dasar seperti menambah data di awal (insert first), di akhir (insert last), dan setelah node tertentu (insert after), serta menghapus data di berbagai posisi. Data yang terdiri dari nama, NIM, jenis kelamin, dan IPK berhasil ditampilkan secara rapi dan terstruktur, membuktikan bahwa struktur data ini dapat menyimpan dan mengolah data secara dinamis dengan baik.
 
 ## Referensi
 
-1. https://www.geeksforgeeks.org/multilist-in-data-structure/ (diakses pada 8 Desember 2025)
-2. https://www.tutorialspoint.com/data_structures_algorithms/linked_list_algorithms.htm (diakses pada 8 Desember 2025)
-3. https://www.programiz.com/dsa/linked-list (diakses pada 8 Desember 2025)
+1. https://www.geeksforgeeks.org/multilist-in-data-structure/
+2. https://www.tutorialspoint.com/data_structures_algorithms/linked_list_algorithms.htm
+3. https://www.programiz.com/dsa/linked-list
+4. https://www.geeksforgeeks.org/circular-linked-list/
+5. https://www.programiz.com/dsa/circular-linked-list
+6. https://www.javatpoint.com/multi-linked-list-in-data-structure
+7. https://www.javatpoint.com/circular-linked-list
+8. https://www.geeksforgeeks.org/doubly-linked-list/
