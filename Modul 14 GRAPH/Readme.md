@@ -255,9 +255,9 @@ int main()
 
 > Output
 > 
-> ![Screenshot bagian x](OUTPUT/guided1.png)
+> ![Screenshot bagian x](Output/Guided1.png)
 
-program yang menggunakan representasi adjacency list. Program bekerja dengan mengalokasikan memori untuk setiap node baru dan menyimpannya dalam linked list utama. Fungsi penghubung node dirancang untuk graph tidak berarah (undirected), di mana koneksi antara dua node (misalnya A dan B) dibuat secara otomatis dua arah dengan menambahkan edge pada daftar tetangga A ke B dan sebaliknya. Kode ini juga menyediakan fitur penelusuran graph: DFS (Depth First Search) yang menjelajahi jalur sedalam mungkin menggunakan rekursi, dan BFS (Breadth First Search) yang menelusuri node tetangga secara melebar (per level) dengan memanfaatkan struktur data Queue untuk mengelola antrian kunjungan.
+Program ini mengimplementasikan struktur data graf menggunakan representasi adjacency list. Setiap simpul dialokasikan dalam memori sebagai elemen terpisah dan dihubungkan melalui linked list utama. Fungsi penghubung simpul dirancang untuk graf tidak berarah, di mana setiap koneksi antara dua simpul dibuat secara timbal balik dengan menambahkan referensi ke daftar tetangga kedua simpul.
 
 ## UNGUIDED 1,2,3
 #### code
