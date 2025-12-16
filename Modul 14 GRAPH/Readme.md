@@ -450,11 +450,12 @@ int main() {
 > 
 > ![Screenshot bagian x](Output/unguided1,2,3.png)
 
-Program yang merupakan representasi Adjacency List berbasis pointer dalam bahasa C++. Program terbagi menjadi tiga file: graph.h sebagai header yang mendefinisikan struktur data verteks dan edge, graph.cpp yang berisi logika manipulasi graph, dan main.cpp sebagai driver untuk pengujian. Fitur utama program ini meliputi pembuatan graph, penambahan verteks, serta penghubungan antar verteks (edge) yang bersifat dua arah. Selain itu, program ini mengimplementasikan dua algoritma penelusuran graph, yaitu DFS (Depth First Search) yang bekerja secara rekursif, dan BFS (Breadth First Search) yang menggunakan struktur data Queue manual (dibuat sendiri tanpa library STL <queue>) untuk menelusuri node secara melebar.
+Program ini mengimplementasikan struktur data graph tidak berarah menggunakan representasi adjacency list berbasis pointer dalam bahasa C, dengan tiga file utama: graf.h yang mendefinisikan struktur data ElmNode untuk simpul dan ElmEdge untuk sisi beserta pointer terkait, graf.cpp yang berisi implementasi fungsi-fungsi dasar seperti CreateGraph untuk inisialisasi, InsertNode untuk penambahan simpul, ConnectNode untuk menghubungkan simpul secara dua arah, serta algoritma penelusuran PrintDFS yang bekerja secara rekursif untuk Depth-First Search dan PrintBFS yang menggunakan queue sederhana untuk Breadth-First Search, dan main.cpp sebagai penggerak yang membangun graph dengan enam simpul (A-F) sesuai pola tertentu, menampilkan adjacency list untuk menunjukkan hubungan antar simpul, kemudian melakukan dan menampilkan hasil penelusuran DFS dan BFS dari simpul awal A, dengan seluruh program dirancang secara modular dan menggunakan alokasi memori dinamis untuk efisiensi dalam merepresentasikan hubungan antar simpul.
 
 
 ## Referensi
 
-1. https://algomap.io/lessons/graphs (diakses pada 15 Desember 2025)
-2. https://terapan-ti.vokasi.unesa.ac.id/post/teori-graf-pengertian-jenis-representasi-dan-algoritma (diakses pada 15 Desember 2025)
-3. https://www.geeksforgeeks.org/dsa/breadth-first-search-or-bfs-for-a-graph/ (diakses pada 15 Desember 2025)
+1.GeeksforGeeks: Graph and its representations https://www.geeksforgeeks.org/graph-and-its-representations/          
+2.GeeksforGeeks: Depth First Search or DFS for a Graph https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/
+3.GeeksforGeeks: Breadth First Search or BFS for a Graph https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
+4.Programiz: Graph Data Structure https://www.programiz.com/dsa/graph
