@@ -258,266 +258,197 @@ int main()
 Program ini mengimplementasikan struktur data graf menggunakan representasi adjacency list. Setiap simpul dialokasikan dalam memori sebagai elemen terpisah dan dihubungkan melalui linked list utama. Fungsi penghubung simpul dirancang untuk graf tidak berarah, di mana setiap koneksi antara dua simpul dibuat secara timbal balik dengan menambahkan referensi ke daftar tetangga kedua simpul.
 
 ## UNGUIDED 1,2,3
+
+
 #### code
 #### graph.h
 ```c++
-#ifndef GRAPH_H_INCLUDED
-#define GRAPH_H_INCLUDED
+#ifndef GRAF_H
+#define GRAF_H
 
-#include <iostream>
-using namespace std;
+typedef char infoGraph;
+typedef struct ElmNode* adrNode;
+typedef struct ElmEdge* adrEdge;
 
-typedef char charInfo;
-typedef struct Vertex *ptrVertex;
-typedef struct Edge *ptrEdge;
-
-struct Vertex {
-    charInfo id;
-    int status; 
-    ptrEdge firstIncidentEdge;
-    ptrVertex nextVertex;
+struct ElmNode {
+    infoGraph info;
+    int visited;
+    adrEdge firstEdge;
+    adrNode next;
 };
 
-struct Edge {
-    ptrVertex destVertex;
-    ptrEdge nextEdge;
+struct ElmEdge {
+    adrNode node;
+    adrEdge next;
 };
 
 struct Graph {
-    ptrVertex firstVertex;
+    adrNode first;
 };
 
-void initGraph(Graph &G);
-void addVertex(Graph &G, charInfo data);
-void addEdge(ptrVertex v1, ptrVertex v2);
-void showGraphData(Graph G);
-void executeDFS(Graph G, ptrVertex startV);
-void executeBFS(Graph G, ptrVertex startV);
-
-ptrVertex searchVertex(Graph G, charInfo data);
+void CreateGraph(Graph* G);
+void InsertNode(Graph* G, infoGraph X);
+void ConnectNode(Graph* G, infoGraph A, infoGraph B);
+void PrintInfoGraph(Graph G);
+void PrintDFS(Graph G, adrNode N);
+void PrintBFS(Graph G, adrNode N);
+adrNode CariNode(Graph G, infoGraph X);
 
 #endif
 ```
 #### graph.cpp
 ```c++
-#include "graph.h"
-#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include "graf.h"
 
-using namespace std;
+void CreateGraph(Graph* G) { G->first = NULL; }
 
-struct NodeQ {
-    ptrVertex val;
-    NodeQ* next;
-};
-
-struct QueueList {
-    NodeQ* head;
-    NodeQ* tail;
-};
-
-void createQ(QueueList &Q) {
-    Q.head = NULL;
-    Q.tail = NULL;
+adrNode BuatNode(infoGraph X) {
+    adrNode baru = (adrNode)malloc(sizeof(struct ElmNode));
+    baru->info = X; baru->visited = 0;
+    baru->firstEdge = NULL; baru->next = NULL;
+    return baru;
 }
 
-bool emptyQ(QueueList Q) {
-    return (Q.head == NULL);
+adrEdge BuatEdge(adrNode tujuan) {
+    adrEdge baru = (adrEdge)malloc(sizeof(struct ElmEdge));
+    baru->node = tujuan; baru->next = NULL;
+    return baru;
 }
 
-void enq(QueueList &Q, ptrVertex v) {
-    NodeQ* baru = new NodeQ;
-    baru->val = v;
-    baru->next = NULL;
-
-    if (emptyQ(Q)) {
-        Q.head = baru;
-        Q.tail = baru;
-    } else {
-        Q.tail->next = baru;
-        Q.tail = baru;
+void InsertNode(Graph* G, infoGraph X) {
+    adrNode baru = BuatNode(X);
+    if (G->first == NULL) G->first = baru;
+    else {
+        adrNode akhir = G->first;
+        while (akhir->next != NULL) akhir = akhir->next;
+        akhir->next = baru;
     }
 }
 
-ptrVertex deq(QueueList &Q) {
-    if (emptyQ(Q)) return NULL;
-
-    NodeQ* del = Q.head;
-    ptrVertex out = del->val;
-
-    Q.head = Q.head->next;
-    if (Q.head == NULL) {
-        Q.tail = NULL;
-    }
-
-    delete del;
-    return out;
-}
-
-void initGraph(Graph &G) {
-    G.firstVertex = NULL;
-}
-
-ptrVertex alokasiVertex(charInfo data) {
-    ptrVertex V = new Vertex;
-    V->id = data;
-    V->status = 0;
-    V->nextVertex = NULL;
-    V->firstIncidentEdge = NULL;
-    return V;
-}
-
-ptrEdge alokasiEdge(ptrVertex tujuan) {
-    ptrEdge E = new Edge;
-    E->destVertex = tujuan;
-    E->nextEdge = NULL;
-    return E;
-}
-
-void addVertex(Graph &G, charInfo data) {
-    ptrVertex V = alokasiVertex(data);
-    
-    if (G.firstVertex == NULL) {
-        G.firstVertex = V;
-    } else {
-        ptrVertex walker = G.firstVertex;
-        for (; walker->nextVertex != NULL; walker = walker->nextVertex);
-        walker->nextVertex = V;
-    }
-}
-
-ptrVertex searchVertex(Graph G, charInfo data) {
-    for (ptrVertex p = G.firstVertex; p != NULL; p = p->nextVertex) {
-        if (p->id == data) return p;
+adrNode CariNode(Graph G, infoGraph X) {
+    adrNode cari = G.first;
+    while (cari != NULL) {
+        if (cari->info == X) return cari;
+        cari = cari->next;
     }
     return NULL;
 }
 
-void addEdge(ptrVertex v1, ptrVertex v2) {
-    if (!v1 || !v2) return;
-
-    ptrEdge eBaru1 = alokasiEdge(v2);
-    eBaru1->nextEdge = v1->firstIncidentEdge;
-    v1->firstIncidentEdge = eBaru1;
-
-    ptrEdge eBaru2 = alokasiEdge(v1);
-    eBaru2->nextEdge = v2->firstIncidentEdge;
-    v2->firstIncidentEdge = eBaru2;
-}
-
-void showGraphData(Graph G) {
-    for (ptrVertex v = G.firstVertex; v != NULL; v = v->nextVertex) {
-        cout << "[" << v->id << "] terhubung ke -> ";
-        
-        ptrEdge e = v->firstIncidentEdge;
-        if (e == NULL) cout << "(tidak ada)";
-        
-        while (e != NULL) {
-            cout << e->destVertex->id << " ";
-            e = e->nextEdge;
-        }
-        cout << endl;
-    }
-}
-
-void resetStatus(Graph G) {
-    for (ptrVertex p = G.firstVertex; p != NULL; p = p->nextVertex) {
-        p->status = 0;
-    }
-}
-
-void runDFS(ptrVertex V) {
-    if (V->status == 1) return;
-
-    V->status = 1;
-    cout << V->id << " ";
-
-    ptrEdge e = V->firstIncidentEdge;
-    while (e != NULL) {
-        if (e->destVertex->status == 0) {
-            runDFS(e->destVertex);
-        }
-        e = e->nextEdge;
-    }
-}
-
-void executeDFS(Graph G, ptrVertex startV) {
-    if (startV == NULL) return;
+void ConnectNode(Graph* G, infoGraph A, infoGraph B) {
+    adrNode nodeA = CariNode(*G, A);
+    adrNode nodeB = CariNode(*G, B);
+    if (nodeA == NULL || nodeB == NULL) return;
     
-    resetStatus(G);
-    cout << "DFS Traversal: ";
-    runDFS(startV);
-    cout << endl;
+    adrEdge edge1 = BuatEdge(nodeB);
+    edge1->next = nodeA->firstEdge;
+    nodeA->firstEdge = edge1;
+    
+    adrEdge edge2 = BuatEdge(nodeA);
+    edge2->next = nodeB->firstEdge;
+    nodeB->firstEdge = edge2;
 }
 
-void executeBFS(Graph G, ptrVertex startV) {
-    if (startV == NULL) return;
-
-    resetStatus(G);
-    cout << "BFS Traversal: ";
-
-    QueueList antrian;
-    createQ(antrian);
-
-    startV->status = 1;
-    enq(antrian, startV);
-
-    while (!emptyQ(antrian)) {
-        ptrVertex current = deq(antrian);
-        cout << current->id << " ";
-
-        for (ptrEdge e = current->firstIncidentEdge; e != NULL; e = e->nextEdge) {
-            if (e->destVertex->status == 0) {
-                e->destVertex->status = 1;
-                enq(antrian, e->destVertex);
+void PrintInfoGraph(Graph G) {
+    char urutan[] = {'A','B','C','D','E','F'};
+    for (int i = 0; i < 6; i++) {
+        adrNode node = CariNode(G, urutan[i]);
+        if (node != NULL) {
+            printf("[%c] terhubung ke -> ", node->info);
+            adrEdge edge = node->firstEdge;
+            while (edge != NULL) {
+                printf("%c", edge->node->info);
+                edge = edge->next;
+                if (edge != NULL) printf(" ");
             }
+            printf("\n");
         }
     }
-    cout << endl;
+}
+
+void resetStatus(Graph* G) {
+    adrNode node = G->first;
+    while (node != NULL) {
+        node->visited = 0;
+        node = node->next;
+    }
+}
+
+void DFS(adrNode node) {
+    if (node == NULL || node->visited == 1) return;
+    node->visited = 1;
+    printf("%c ", node->info);
+    adrEdge edge = node->firstEdge;
+    while (edge != NULL) {
+        if (edge->node->visited == 0) DFS(edge->node);
+        edge = edge->next;
+    }
+}
+
+void PrintDFS(Graph G, adrNode N) {
+    resetStatus(&G);
+    printf("DFS Traversal: ");
+    DFS(N);
+    printf("\n");
+}
+
+void PrintBFS(Graph G, adrNode N) {
+    if (N == NULL) return;
+    resetStatus(&G);
+    printf("BFS Traversal: ");
+    
+    adrNode queue[100];
+    int depan = 0, belakang = 0;
+    N->visited = 1;
+    queue[belakang++] = N;
+    
+    while (depan < belakang) {
+        adrNode sekarang = queue[depan++];
+        printf("%c ", sekarang->info);
+        adrEdge edge = sekarang->firstEdge;
+        while (edge != NULL) {
+            if (edge->node->visited == 0) {
+                edge->node->visited = 1;
+                queue[belakang++] = edge->node;
+            }
+            edge = edge->next;
+        }
+    }
+    printf("\n");
 }
 ```
 #### main.cpp
 ```c++
-#include "graph.h"
-#include <iostream>
-
-using namespace std;
+#include "graf.h"
+#include <stdio.h>
 
 int main() {
-    Graph myGraph;
-    initGraph(myGraph);
-
-    char listV[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-    for(int i=0; i<8; i++){
-        addVertex(myGraph, listV[i]);
-    }
-
-    ptrVertex vA = searchVertex(myGraph, 'A');
-    ptrVertex vB = searchVertex(myGraph, 'B');
-    ptrVertex vC = searchVertex(myGraph, 'C');
-    ptrVertex vD = searchVertex(myGraph, 'D');
-    ptrVertex vE = searchVertex(myGraph, 'E');
-    ptrVertex vF = searchVertex(myGraph, 'F');
-    ptrVertex vG = searchVertex(myGraph, 'G');
-    ptrVertex vH = searchVertex(myGraph, 'H');
-
-    addEdge(vA, vB); addEdge(vA, vC);
-    addEdge(vB, vD); addEdge(vB, vE);
-    addEdge(vC, vF); addEdge(vC, vG);
-    addEdge(vD, vH); addEdge(vE, vH);
-    addEdge(vF, vH); addEdge(vG, vH);
-
-    showGraphData(myGraph);
-    cout << endl;
-
-    executeDFS(myGraph, vA);
-    executeBFS(myGraph, vA);
-
+    Graph G;
+    CreateGraph(&G);
+    
+    InsertNode(&G, 'A'); InsertNode(&G, 'B'); InsertNode(&G, 'C');
+    InsertNode(&G, 'D'); InsertNode(&G, 'E'); InsertNode(&G, 'F');
+    
+    ConnectNode(&G, 'A', 'B'); ConnectNode(&G, 'A', 'D');
+    ConnectNode(&G, 'B', 'C'); ConnectNode(&G, 'B', 'E');
+    ConnectNode(&G, 'C', 'F'); ConnectNode(&G, 'D', 'E');
+    ConnectNode(&G, 'E', 'F');
+    
+    printf("=== Graph Adjacency List ===\n");
+    PrintInfoGraph(G);
+    printf("\n");
+    
+    adrNode nodeA = CariNode(G, 'A');
+    PrintDFS(G, nodeA);
+    PrintBFS(G, nodeA);
+    
     return 0;
 }
 ```
 > Output soal 1
 > 
-> ![Screenshot bagian x](OUTPUT/unguided1.png)
+> ![Screenshot bagian x](Output/unguided1.png)
 
 Program yang merupakan representasi Adjacency List berbasis pointer dalam bahasa C++. Program terbagi menjadi tiga file: graph.h sebagai header yang mendefinisikan struktur data verteks dan edge, graph.cpp yang berisi logika manipulasi graph, dan main.cpp sebagai driver untuk pengujian. Fitur utama program ini meliputi pembuatan graph, penambahan verteks, serta penghubungan antar verteks (edge) yang bersifat dua arah. Selain itu, program ini mengimplementasikan dua algoritma penelusuran graph, yaitu DFS (Depth First Search) yang bekerja secara rekursif, dan BFS (Breadth First Search) yang menggunakan struktur data Queue manual (dibuat sendiri tanpa library STL <queue>) untuk menelusuri node secara melebar.
 
