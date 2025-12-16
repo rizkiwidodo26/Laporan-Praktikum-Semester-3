@@ -446,9 +446,9 @@ int main() {
     return 0;
 }
 ```
-> Output soal 1
+> Output soal 1,2,3
 > 
-> ![Screenshot bagian x](Output/unguided1.png)
+> ![Screenshot bagian x](Output/unguided1,2,3.png)
 
 Program yang merupakan representasi Adjacency List berbasis pointer dalam bahasa C++. Program terbagi menjadi tiga file: graph.h sebagai header yang mendefinisikan struktur data verteks dan edge, graph.cpp yang berisi logika manipulasi graph, dan main.cpp sebagai driver untuk pengujian. Fitur utama program ini meliputi pembuatan graph, penambahan verteks, serta penghubungan antar verteks (edge) yang bersifat dua arah. Selain itu, program ini mengimplementasikan dua algoritma penelusuran graph, yaitu DFS (Depth First Search) yang bekerja secara rekursif, dan BFS (Breadth First Search) yang menggunakan struktur data Queue manual (dibuat sendiri tanpa library STL <queue>) untuk menelusuri node secara melebar.
 
