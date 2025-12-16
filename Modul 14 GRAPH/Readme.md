@@ -2,9 +2,7 @@
 <p align="center">RIZKI WIDODO - 103112400136</p>
 
 ## Dasar Teori
-Graph didefinisikan sebagai himpunan tidak kosong yang terdiri dari node (disebut juga vertex) dan garis penghubung (disebut edge). Struktur data ini digunakan untuk merepresentasikan hubungan antar objek. Sebagai contoh sederhana dalam kehidupan sehari-hari, lokasi seperti "Tempat Kost" dan "Common Lab" dapat dianggap sebagai node (vertex), sedangkan jalan yang menghubungkan keduanya merepresentasikan edge.
-
-Secara umum, graph dibedakan menjadi dua jenis utama berdasarkan arah hubungannya. Pertama adalah Directed Graph (Graph Berarah), di mana setiap edge memiliki arah spesifik dari satu node ke node lainnya. Dalam representasi ini, jika Node A terhubung ke Node B, belum tentu Node B terhubung kembali ke Node A. Kedua adalah Undirected Graph (Graph Tidak Berarah), di mana edge menghubungkan node tanpa arah tertentu, sehingga hubungan bersifat dua arah (bidirectional). Selain itu, dua node dikatakan "bertetangga" jika keduanya dihubungkan langsung oleh sebuah edge.
+Graph adalah struktur data non-linear yang merepresentasikan himpunan objek (disebut vertex atau node) yang terhubung oleh sisi (edge) yang dapat memiliki arah (pada directed graph) maupun tidak (pada undirected graph). Dalam implementasinya, graph dapat direpresentasikan menggunakan adjacency matrix atau adjacency list (multilist), dengan adjacency list sering dipilih karena efisiensi memorinya untuk graph yang sparse. Algoritma dasar pada graph meliputi penelusuran seperti Breadth-First Search (BFS) yang menjelajahi graph per level dan Depth-First Search (DFS) yang menjelajahi secara mendalam, serta topological sort untuk mengurutkan vertex pada directed acyclic graph berdasarkan dependensi antar node.
 
 ## Guided
 
